@@ -1,0 +1,42 @@
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  max-width: 100%;
+  width: 100%;
+}
+
+.main-sidebar {
+  height: 100vh !important;
+  position: fixed !important;
+}
+
+.measurement label {
+  font-weight: 600 !important;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #fff;
+  background-color: #fff;
+  background-color: #007bff;
+}
+.nav .nav-tabs{
+  border-color: black;
+}
+
+.delivery-alert-tab {
+  background-color: #ff0000; /* Red background for Delivery Alert tab */
+}
+
+.pending-order-tab {
+  background-color: #ffff00; /* Yellow background for Pending Order tab */
+}
+
+.completed-order-tab {
+  background-color: #00ff00; /* Green background for Completed Order tab */
+}
+
+.delivered-order-tab {
+  background-color: #00ffff; /* Light blue background for Delivered Order tab */
+}
