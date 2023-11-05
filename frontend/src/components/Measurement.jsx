@@ -121,7 +121,6 @@ export default function Measurement() {
                 }
             })
             .catch(function (error) {
-                console.log(error);
             })
     }
 
@@ -192,8 +191,6 @@ export default function Measurement() {
                 cuff: val.cuff,
             })
                 .then(function (res) {
-                    console.log("id------------", params.id);
-                    console.log(res.data);
                     if (res.data.status === 'success') {
                         toast.success("Measurement Saved Succesfully", {
                             autoClose: 4000,
@@ -205,7 +202,6 @@ export default function Measurement() {
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
                 })
         } else {
             axios.put(`http://localhost:5000/measurement/update_map/${params.id}`, {
@@ -236,7 +232,6 @@ export default function Measurement() {
                 cuff: val.cuff,
             })
                 .then(function (res) {
-                    console.log(res.data);
                     if (res.data.status === 'success') {
                         toast.success("Measurement Updated Succesfully", {
                             autoClose: 4000,
@@ -248,7 +243,6 @@ export default function Measurement() {
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
                 })
         }
     }
@@ -523,7 +517,7 @@ export default function Measurement() {
                     <Print_measurement shirtMeasurement={shirtData} pentMeasurement={pentData} customerData={customerData} />
                 </div>
             </div>
-            <Footer className='bottom-fixed' />
+            <Footer />
         </div>
     )
 }

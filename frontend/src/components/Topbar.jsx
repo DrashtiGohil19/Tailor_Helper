@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export default function Topbar() {
   const navigate = useNavigate()
@@ -20,7 +20,7 @@ export default function Topbar() {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#" onClick={handleLogOut} role="button">
+          <a className="nav-link" onClick={handleLogOut} role="button">
             <i className="fas fa-power-off"></i>
           </a>
         </li>

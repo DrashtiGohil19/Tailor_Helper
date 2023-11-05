@@ -1,6 +1,6 @@
 const billModel = require("../model/billModel")
 const customerModel = require("../model/customerModel")
-const moment = require('moment'); // Require the 'moment' library for date manipulation
+const moment = require('moment');
 
 exports.add_bill = async (req, res) => {
     try {

@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { addCustomer, view_customer, search_customer, delete_customer, single_customer, update_customer, last_customer, get_name, customerProfile } = require('../controller/customerController');
-const { add_rate, get_rate, update_rate } = require('../controller/rateController');
+const { addCustomer, view_customer, search_customer, delete_customer, single_customer, update_customer, customerProfile, rate_customer } = require('../controller/customerController');
 
 const cors = require('cors');
 const corsOptions = {
@@ -19,10 +18,8 @@ router.get('/single_customer/:id', single_customer)
 router.put('/update_customer/:id', update_customer)
 router.get('/customerprofile/:id', customerProfile)
 
-router.post('/add_rate', add_rate)
-router.get('/view_rate', get_rate)
-router.put('/update_rate', update_rate)
-// router.get('/last_customer', last_customer)
-// router.get('/get_name', get_name)
+router.post('/ratecustomer', rate_customer)
+router.get('/ratecustomer', rate_customer)
+
 
 module.exports = router;

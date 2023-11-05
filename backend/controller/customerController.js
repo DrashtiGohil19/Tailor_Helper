@@ -1,6 +1,7 @@
 const billModel = require('../model/billModel');
 const customerModel = require('../model/customerModel');
 const pentModel = require('../model/pentModel');
+const rateCustomerModel = require('../model/rateCustomer');
 const shirtModel = require('../model/shirtModel');
 
 // ---- add customer ----
@@ -141,41 +142,6 @@ exports.update_customer = async (req, res) => {
     }
 }
 
-// ---- last customer ----
-
-exports.last_customer = async (req, res) => {
-    try {
-        var data = await customerModel.find().sort({ _id: -1 }).limit(1)
-        res.status(200).json({
-            status: "success",
-            data: data[0]
-        });
-    } catch (error) {
-        res.status(500).json({
-            status: "failed",
-            error
-        });
-    }
-}
-
-// ---- get name of customer ----
-
-exports.get_name = async (req, res) => {
-    try {
-        var mobilenu = req.query.mobilenu
-        var data = await customerModel.find({ mobilenu: mobilenu })
-        res.status(200).json({
-            status: "success",
-            data
-        });
-    } catch (error) {
-        res.status(500).json({
-            status: "failed",
-            error
-        });
-    }
-}
-
 // ---- get customer history ----
 
 exports.customerProfile = async (req, res) => {
@@ -183,11 +149,34 @@ exports.customerProfile = async (req, res) => {
         var id = req.params.id;
         var customerData = await billModel.find({ customer_id: id })
         var data = await customerModel.findById(id)
-        console.log('data----->', data);
         res.status(200).json({
             status: "success",
             customerData, data
         });
+    } catch (error) {
+        res.status(500).json({
+            status: "failed",
+            error
+        });
+    }
+}
+
+// ---- add, get, update rate worker ---
+
+exports.rate_customer = async (req, res) => {
+    try {
+        const existingRate = await rateCustomerModel.findOne();
+        if (!existingRate) {
+            const newRate = await rateCustomerModel.create(req.body)
+            res.status(201).json({
+                status: "success",
+                newRate
+            });
+        } else {
+            existingRate.set(req.body);
+            await existingRate.save();
+            res.status(200).json(existingRate);
+        }
     } catch (error) {
         res.status(500).json({
             status: "failed",

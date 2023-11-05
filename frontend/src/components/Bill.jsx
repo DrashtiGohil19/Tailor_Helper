@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import BillPage from "./BillPage";
 import ReactToPrint from "react-to-print";
 import Footer from "./Footer";
+import QRCode from "qrcode.react";
+import QrModel from "./QrModel";
 
 function Bill() {
 
@@ -19,7 +21,7 @@ function Bill() {
     shirt_qty: 0,
     pent_qty: 0,
     kurta_qty: 0,
-    paid_amt: "",
+    paid_amt: 0,
     booking_date: "",
     delivery_date: ""
   })
@@ -27,19 +29,25 @@ function Bill() {
   const [pentAmount, setPentAmount] = useState(0);
   const [kurtaAmount, setKurtaAmount] = useState(0);
   const [customer_id, setCustomer_id] = useState()
+  const [showModel, setShowModel] = useState(false)
+
   const ref = useRef(null);
 
   const getRate = () => {
-    axios.get("http://localhost:5000/customer/view_rate")
+    axios.get("http://localhost:5000/customer/ratecustomer")
       .then(function (response) {
-        setVal(response.data.data)
+        setVal(response.data)
       })
       .catch(function (error) {
       })
   }
 
   const get_customerData = async () => {
-    await axios.get(`http://localhost:5000/bill/bill_data?mobilenu=${mobilenu}`)
+    await axios.get(`http://localhost:5000/bill/bill_data?mobilenu=${mobilenu}`, {
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      }
+    })
       .then(function (response) {
         if (response.data.data !== null) {
           setValue(response.data.data)
@@ -94,9 +102,12 @@ function Bill() {
       total_amt: totalAmount,
       paid_amt: value.paid_amt || 0,
       final_amt: finalAmount
+    }, {
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      }
     })
       .then(function (response) {
-        console.log(response.data.data);
         if (response.data.status === "success") {
           toast.success("Saved Succesfully !", {
             autoClose: 4000,
@@ -115,7 +126,8 @@ function Bill() {
     getRate()
     get_customerData()
     document.title = "Simplex Tailor - Bill Page"
-  }, [mobilenu])
+
+  }, [mobilenu, customer_id])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -283,7 +295,7 @@ function Bill() {
                   <div className="col-sm-4">
                     <div className="form-group">
                       <label>Paid Amount</label>
-                      <input type="number" className="form-control" name="paid_amt" value={value.paid_amt || 0} onChange={handleChange} />
+                      <input type="number" className="form-control" name="paid_amt" value={value.paid_amt} onChange={handleChange} />
                     </div>
                   </div>
                   <div className="col-sm-4">
@@ -302,6 +314,7 @@ function Bill() {
                 trigger={() => <button className="btn btn-primary">Get Print</button>}
                 content={() => ref.current}
               />
+              <button className="btn btn-primary ml-3" onClick={() => setShowModel(true)}>QR code</button>
             </div>
           </div>
         </section>
@@ -311,7 +324,7 @@ function Bill() {
           <BillPage data={data} shirtData={shirtData} pentData={pentData} kurtaData={kurtaData} customerData={customerData} />
         </div>
       </div>
-      <Footer className='bottom-fixed' />
+      {showModel && <QrModel showModel={showModel} closeModel={() => setShowModel(false)} />}
     </div >
   )
 }

@@ -5,11 +5,12 @@ import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import { Pagination, Stack } from "@mui/material";
 import { MdLibraryAdd } from "react-icons/md";
-import { FaHistory } from "react-icons/fa"
+import { FaHistory, FaRupeeSign } from "react-icons/fa"
 import DeleteData from "./DeleteData";
 import EditWorker from "./EditWorker";
 import AddPerson from "./AddPerson";
 import Footer from "./Footer";
+import Rate from "./Rate";
 
 export default function CustomerList() {
   const [view, setview] = useState();
@@ -22,6 +23,7 @@ export default function CustomerList() {
   const [deleteModel, setDeleteModel] = useState(false)
   const [selectedId, setSelectedId] = useState(null)
   const [editModel, setEditModel] = useState(false)
+  const [rateModel, setRateModel] = useState(false)
 
   const showModel = () => {
     setModelOpen(true)
@@ -58,6 +60,10 @@ export default function CustomerList() {
     viewdata()
   }
 
+  const showRateModel = () => {
+    setRateModel(true)
+  }
+
   useEffect(() => {
     viewdata();
     searchCustomer();
@@ -66,7 +72,6 @@ export default function CustomerList() {
   const viewdata = () => {
     axios.get(`http://localhost:5000/customer/view_customer?page_no=${currentPage}`)
       .then(function (res) {
-        console.log(res.data.data);
         setview(res.data.data);
         setTotalPages(res.data.totalpage)
       })
@@ -78,7 +83,6 @@ export default function CustomerList() {
 
     axios.get(`http://localhost:5000/customer/search_customer?page_no=${currentPage}&search=${query}`)
       .then(function (res) {
-        console.log(res.data.data);
         setview(res.data.data);
       })
   }
@@ -95,9 +99,14 @@ export default function CustomerList() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active">
+                  <li className="mr-3">
                     <button className="btn btn-primary" onClick={showModel}>
                       <MdLibraryAdd /> Add Customer
+                    </button>
+                  </li>
+                  <li className="">
+                    <button className="btn btn-primary" onClick={showRateModel}>
+                      <FaRupeeSign /> Rate
                     </button>
                   </li>
                 </ol>
@@ -161,6 +170,7 @@ export default function CustomerList() {
       {ModelOpen && <AddPerson showModel={showModel} closeModal={closeModal} isAddingWorker={false} />}
       {deleteModel && <DeleteData showDelete={showDelete} closeDelete={closeDelete} DelWorker={false} selectedId={selectedId} />}
       {editModel && <EditWorker showEdit={showEdit} closeEdit={closeEdit} selectedId={selectedId} WorketEdit={false} />}
+      {ModelOpen && <Rate showRateModel={showRateModel} closeModel={closeModal} isCustomerRate={true} />}
 
       <Footer />
     </div>

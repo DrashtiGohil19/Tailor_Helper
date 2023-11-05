@@ -24,19 +24,3 @@
 .nav .nav-tabs{
   border-color: black;
 }
-
-.delivery-alert-tab {
-  background-color: #ff0000; /* Red background for Delivery Alert tab */
-}
-
-.pending-order-tab {
-  background-color: #ffff00; /* Yellow background for Pending Order tab */
-}
-
-.completed-order-tab {
-  background-color: #00ff00; /* Green background for Completed Order tab */
-}
-
-.delivered-order-tab {
-  background-color: #00ffff; /* Light blue background for Delivered Order tab */
-}

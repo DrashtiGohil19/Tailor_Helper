@@ -21,27 +21,21 @@ export default function WorkerProfile() {
 
         const month = selectedMonth || new Date().getMonth() + 1;
         const year = selectedYear || new Date().getFullYear();
-        console.log(month);
-        console.log(year);
 
         axios.get(`http://localhost:5000/worker/workerprofile?data_id=${params.id}&selectedMonth=${month}&selectedYear=${year}`)
             .then(function (res) {
-                console.log(res.data.data);
                 setval(res.data.data);
             })
             .catch(function (error) {
-                console.log(error);
             })
     }
 
     const single_worker = () => {
         axios.get(`http://localhost:5000/worker/single_worker/${params.id}`)
             .then(function (res) {
-                console.log(res.data.data);
                 setName(res.data.data.workername);
             })
             .catch(function (error) {
-                console.log(error);
             })
     }
     return (
@@ -161,7 +155,7 @@ export default function WorkerProfile() {
                     </div>
                 </section>
             </div>
-            <Footer className='bottom-fixed' />
+            <Footer />
         </div>
     )
 }

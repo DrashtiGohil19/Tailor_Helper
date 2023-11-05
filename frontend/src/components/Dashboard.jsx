@@ -10,6 +10,7 @@ import '../App.css'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import Footer from './Footer';
 
 export default function Dashboard() {
 
@@ -17,23 +18,30 @@ export default function Dashboard() {
     const [complete, setComplete] = useState()
     const [deliver, setDeliver] = useState()
     const [alert, setAlert] = useState()
+    const token = localStorage.getItem("token");
 
     const sortDeliveryData = () => {
-        axios.get('http://localhost:5000/bill/order')
+        axios.get('http://localhost:5000/bill/order', {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
             .then((response) => {
                 setPending(response.data.pendingData)
                 setComplete(response.data.completedData)
                 setDeliver(response.data.deliveryData)
-                console.log(response.data.deliveryData);
             })
     }
     const deliveryAlert = () => {
-        axios.get('http://localhost:5000/bill/delivery_alert')
+        axios.get('http://localhost:5000/bill/delivery_alert', {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
             .then((response) => {
                 setAlert(response.data.deliveryData)
             })
     }
-
     useEffect(() => {
         sortDeliveryData()
         deliveryAlert()
@@ -50,9 +58,12 @@ export default function Dashboard() {
 
         axios.put(`http://localhost:5000/bill/update_status/${id}`, {
             status: statusValue
+        }, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
         })
             .then((response) => {
-                console.log(response.data);
                 if (response.data.status === 'success') {
                     setPending((prevVal) => prevVal.filter(item => item._id !== id));
                     toast.success(successMSG, {
@@ -294,6 +305,7 @@ export default function Dashboard() {
                     </Tabs>
                 </section>
             </div >
+            {/* <Footer /> */}
         </>
     )
 }

@@ -29,7 +29,6 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
 
         axios.post(apiEndpoint, dataPayload)
             .then(function (response) {
-                console.log(response.data);
                 if (response.data.status === 'success') {
                     closeModal()
                     const successMessage = isAddingWorker
@@ -46,7 +45,6 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
                 }
             })
             .catch(function (error) {
-                console.log(error);
                 closeModal();
                 const errorMessage = isAddingWorker
                     ? 'Failed to add worker!'

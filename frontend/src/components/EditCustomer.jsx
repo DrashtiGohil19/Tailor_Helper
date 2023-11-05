@@ -41,11 +41,9 @@ export default function EditCustomer() {
   useEffect(() => {
     axios.get(`http://localhost:5000/customer/single_customer/${params.id}`)
       .then(function (res) {
-        console.log(res.data.data);
         setval(res.data.data)
       })
       .catch(function (error) {
-        console.log(error);
       })
   }, [params.id])
 
@@ -67,7 +65,6 @@ export default function EditCustomer() {
       mobilenu: val.mobilenu
     })
       .then(function (response) {
-        console.log(response.data);
         if (response.data.status === 'success') {
           setModalShow(true)
           setval({
@@ -77,7 +74,6 @@ export default function EditCustomer() {
         }
       })
       .catch(function (error) {
-        console.log(error);
       })
   }
   return (

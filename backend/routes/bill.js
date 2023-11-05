@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const { add_bill, get_billData, pending_order, markAsCompleted, orders, delivery_alert, updateStatus } = require('../controller/billController');
+const { add_bill, get_billData, orders, delivery_alert, updateStatus } = require('../controller/billController');
+const { checktoken } = require('../middlewere/auth');
 
 const cors = require('cors');
 const corsOptions = {

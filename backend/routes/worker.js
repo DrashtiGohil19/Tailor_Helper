@@ -3,6 +3,7 @@ var router = express.Router();
 
 const cors = require('cors');
 const { addWorker, rate_worker, view_worker, add_work, delete_worker, single_worker, search_worker, update_worker, workerProfile } = require('../controller/workerController');
+const { checktoken } = require('../middlewere/auth');
 const corsOptions = {
     origin: 'http://localhost:3000',
     credentials: true,
@@ -13,7 +14,7 @@ router.use(cors(corsOptions));
 router.post('/addworker', addWorker)
 router.post('/rate_worker', rate_worker)
 router.get('/rate_worker', rate_worker)
-router.get('/viewworker', view_worker)
+router.get('/viewworker', checktoken, view_worker)
 router.get('/single_worker/:id', single_worker)
 router.put('/update_worker/:id', update_worker)
 router.get('/search_worker', search_worker)

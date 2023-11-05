@@ -11,12 +11,10 @@ function CustomerProfile() {
     useEffect(() => {
         axios.get(`http://localhost:5000/customer/customerprofile/${params.id}`)
             .then(function (res) {
-                console.log(res.data.customerData);
                 setVal(res.data.customerData)
                 setName(res.data.data.customername)
             })
             .catch(function (error) {
-                console.log(error);
             })
     }, [params.id])
     return (

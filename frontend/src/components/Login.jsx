@@ -15,16 +15,14 @@ export default function Login() {
             email: val.email,
             password: val.password
         })
-        .then(function (response) {
-            console.log(response.data);
-            if(response.data.status === "Success") {
-                localStorage.setItem("token",response.data.token)
+            .then(function (response) {
+                if (response.data.status === "Success") {
+                    localStorage.setItem("token", response.data.token)
+                }
                 navigate('/dashboard')
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+            })
+            .catch(function (error) {
+            })
     }
 
     const handleChange = (e) => {
@@ -61,7 +59,6 @@ export default function Login() {
                         <div className="d-flex justify-content-center">
                             <button className='btn btn-primary' onClick={handleLogin}>LOGIN</button>
                         </div>
-
                     </div>
                 </div>
             </div>

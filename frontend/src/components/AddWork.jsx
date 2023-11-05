@@ -22,11 +22,9 @@ export default function AddWork({ showModel1, closeModal1, selectedId }) {
     useEffect(() => {
         axios.get(`http://localhost:5000/worker/single_worker/${selectedId}`)
             .then(function (res) {
-                console.log(res.data.data);
                 setName(res.data.data.workername)
             })
             .catch(function (error) {
-                console.log(error);
             })
     }, [])
 
@@ -41,25 +39,23 @@ export default function AddWork({ showModel1, closeModal1, selectedId }) {
             withdrawal: val.withdrawal,
         })
             .then(function (response) {
-                console.log(response);
                 closeModal1()
                 if(response.data.status === "success"){
                     toast.success("Data saved succesfully !",{
                         autoClose: 4000,
                         style: {
                             backgroundColor: 'black',
-                            color: 'white',         
+                            color: 'white',
                           },
                     })
                 }
             })
             .catch(function (error) {
-                console.log(error);
                 toast.error('please enter another data !',{
                     autoClose:5000,
                     style: {
                         backgroundColor: 'black',
-                        color: 'white',         
+                        color: 'white',
                       },
                   })
                   closeModal1()

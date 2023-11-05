@@ -10,7 +10,7 @@ import AddWork from './AddWork';
 import EditWorker from './EditWorker';
 import DeleteData from './DeleteData';
 import { FaRupeeSign } from 'react-icons/fa';
-import RateWorker from './RateWorker';
+import Rate from './Rate';
 import AddPerson from './AddPerson';
 import Footer from './Footer';
 
@@ -84,12 +84,19 @@ export default function AllWorker() {
   }, [currentPage]);
 
   const viewdata = () => {
-    axios.get(`http://localhost:5000/worker/viewworker?page_no=${currentPage}`)
+    axios.get(`http://localhost:5000/worker/viewworker?page_no=${currentPage}`, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    })
       .then(function (res) {
         setview(res.data.data);
-        setTotalPages(res.data.totalpage)
+        setTotalPages(res.data.totalpage);
       })
+      .catch(function (error) {
+      });
   }
+
 
   const searchWorker = (e) => {
     const query = e?.target?.value || "";
@@ -118,7 +125,7 @@ export default function AllWorker() {
                       <MdLibraryAdd /> Add Worker
                     </button>
                   </li>
-                  <li className="">
+                  <li>
                     <button className="btn btn-primary" onClick={() => setRateModel(true)}>
                       <FaRupeeSign /> Rate
                     </button>
@@ -182,7 +189,7 @@ export default function AllWorker() {
       {ModalOpen && <AddWork showModel1={showModel1} closeModal1={closeModal1} selectedId={selectedId} />}
       {editModel && <EditWorker showEdit={showEdit} closeEdit={closeEdit} selectedId={selectedId} WorkerEdit={true} />}
       {deleteModel && <DeleteData showDelete={showDelete} closeDelete={closeDelete} DelWorker={true} selectedId={selectedId} />}
-      {rateModel && <RateWorker rateModel={rateModel} closeModel={() => setRateModel(false)} />}
+      {rateModel && <Rate rateModel={rateModel} closeModel={() => setRateModel(false)} />}
 
       <Footer />
     </div>
