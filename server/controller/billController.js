@@ -1,10 +1,6 @@
 const billModel = require("../model/billModel")
 const customerModel = require("../model/customerModel")
 const moment = require('moment');
-const PDFDocument = require('pdfkit');
-const fs = require('fs');
-const QRCode = require('qrcode');
-
 
 exports.add_bill = async (req, res) => {
     try {

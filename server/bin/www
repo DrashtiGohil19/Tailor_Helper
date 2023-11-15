@@ -4,13 +4,14 @@
  * Module dependencies.
  */
 
+const dotenv = require('dotenv');
 var app = require('../app');
 var debug = require('debug')('backend:server');
 var http = require('http');
-
+dotenv.config()
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/tailor_desk')
+mongoose.connect(process.env.MONGODB_URL)
   .then(() => console.log('Connected!'));
 
 /**

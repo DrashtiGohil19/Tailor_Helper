@@ -41,7 +41,6 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
         return isValid;
     };
 
-
     const passdata = (e) => {
         e.preventDefault()
 
