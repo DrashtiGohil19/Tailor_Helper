@@ -26,17 +26,21 @@ app.use('/customer', customerRouter);
 app.use('/measurement', measurementRouter);
 app.use('/bill', billRouter);
 
-// --------- Production ------------
+// --------- Deployement ------------
 
-if(process.env.NODE_ENV === "production"){
-  app.use(express.static("client/build"))
-  const path = require("path")
-  app.get("*",(req,res) => {
-    res.sendFile(path.resolve(__dirname,"client","build","index.html"))
+const __dirname1 = path.resolve()
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "client/build")))
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
+  })
+} else {
+  app.get('/', (req, res) => {
+    res.send("API running succesfully !")
   })
 }
 
-// ----------------------------------
+// --------- Deployement ------------
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

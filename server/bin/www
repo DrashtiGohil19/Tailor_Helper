@@ -3,13 +3,14 @@
 /**
  * Module dependencies.
  */
-
+const express = require("express")
 const dotenv = require('dotenv');
 var app = require('../app');
 var debug = require('debug')('backend:server');
 var http = require('http');
 dotenv.config()
 const mongoose = require('mongoose');
+const path = require('path');
 
 mongoose.connect(process.env.MONGODB_URL)
   .then(() => console.log('Connected!'));
@@ -94,3 +95,19 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+// --------- Deployement ------------
+
+const __dirname1 = path.resolve()
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "client/build")))
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
+  })
+} else {
+  app.get('/', (req, res) => {
+    res.send("API running succesfully !")
+  })
+}
+
+// --------- Deployement ------------
