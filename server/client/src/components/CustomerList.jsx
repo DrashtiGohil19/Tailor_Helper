@@ -66,7 +66,6 @@ export default function CustomerList() {
 
   const showRateModel = () => {
     setRateModel(true)
-    console.log('cliked');
   }
 
   useEffect(() => {
@@ -76,7 +75,7 @@ export default function CustomerList() {
   }, [currentPage]);
 
   const viewdata = () => {
-    axios.get(`http://localhost:5000/customer/view_customer?page_no=${currentPage}`)
+    axios.get(`/customer/view_customer?page_no=${currentPage}`)
       .then(function (res) {
         setview(res.data.data);
         setTotalPages(res.data.totalpage)
@@ -87,7 +86,7 @@ export default function CustomerList() {
     const query = e?.target?.value || "";
     setSearchQuery(query);
 
-    axios.get(`http://localhost:5000/customer/search_customer?page_no=${currentPage}&search=${query}`)
+    axios.get(`/customer/search_customer?page_no=${currentPage}&search=${query}`)
       .then(function (res) {
         setview(res.data.data);
       })

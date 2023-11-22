@@ -13,7 +13,6 @@ exports.add_measurement = async (req, res) => {
             customer_id: customer_id,
             extra_p, weist, p_length, hip, round, thigh, knee, knee1, knee2, bottom
         };
-        console.log('id------------', customer_id);
         const pent_data = await pentModel.create(pent_obj);
 
         const shirt_obj = {

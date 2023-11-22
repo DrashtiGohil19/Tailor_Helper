@@ -20,7 +20,7 @@ export default function AddWork({ showModel1, closeModal1, selectedId }) {
     };
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/worker/single_worker/${selectedId}`)
+        axios.get(`/worker/single_worker/${selectedId}`)
             .then(function (res) {
                 setName(res.data.data.workername)
             })
@@ -30,7 +30,7 @@ export default function AddWork({ showModel1, closeModal1, selectedId }) {
 
     const passdata = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:5000/worker/addwork", {
+        axios.post("/worker/addwork", {
             worker_id: selectedId,
             date: val.date,
             shirt: val.shirt,

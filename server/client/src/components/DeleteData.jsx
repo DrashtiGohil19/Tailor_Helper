@@ -6,8 +6,8 @@ export default function DeleteData({ showDelete, closeDelete, DelWorker, selecte
     const handleDelete = () => {
 
         const apiEndpoint = DelWorker
-            ? `http://localhost:5000/worker/delete_worker/${selectedId}`
-            : `http://localhost:5000/customer/delete_customer/${selectedId}`
+            ? `/worker/delete_worker/${selectedId}`
+            : `/customer/delete_customer/${selectedId}`
 
         axios.delete(apiEndpoint)
             .then(function (response) {

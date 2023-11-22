@@ -18,8 +18,8 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
     }
 
     const apiEndpoint = isCustomerRate
-        ? 'http://localhost:5000/customer/ratecustomer'
-        : 'http://localhost:5000/worker/rate_worker'
+        ? '/customer/ratecustomer'
+        : '/worker/rate_worker'
 
     const handleUpdate = () => {
 

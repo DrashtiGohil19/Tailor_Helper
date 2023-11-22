@@ -21,7 +21,7 @@ export default function Dashboard() {
     const token = localStorage.getItem("token");
 
     const sortDeliveryData = () => {
-        axios.get('http://localhost:5000/bill/order', {
+        axios.get('/bill/order', {
             headers: {
                 'Authorization': token
             }
@@ -33,7 +33,7 @@ export default function Dashboard() {
             })
     }
     const deliveryAlert = () => {
-        axios.get('http://localhost:5000/bill/delivery_alert', {
+        axios.get('/bill/delivery_alert', {
             headers: {
                 'Authorization': token
             }
@@ -57,7 +57,7 @@ export default function Dashboard() {
             successMSG = "Order marked as delivered!";
         }
 
-        axios.put(`http://localhost:5000/bill/update_status/${id}`, {
+        axios.put(`/bill/update_status/${id}`, {
             status: statusValue
         }, {
             headers: {

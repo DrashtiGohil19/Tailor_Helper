@@ -46,8 +46,8 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
 
         if (validateForm()) {
             const apiEndpoint = isAddingWorker
-                ? "http://localhost:5000/worker/addworker"
-                : "http://localhost:5000/customer/add_customer";
+                ? "/worker/addworker"
+                : "/customer/add_customer";
 
             const dataPayload = isAddingWorker
                 ? { workername: val.name, mobilenu: val.mobilenu }

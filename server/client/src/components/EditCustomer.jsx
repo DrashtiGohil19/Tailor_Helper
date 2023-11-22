@@ -39,7 +39,7 @@ export default function EditCustomer() {
 
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/customer/single_customer/${params.id}`)
+    axios.get(`/customer/single_customer/${params.id}`)
       .then(function (res) {
         setval(res.data.data)
       })
@@ -60,7 +60,7 @@ export default function EditCustomer() {
       setError("Failed To Store Data Please Enter Another Name Or Mobile Number !")
     }
 
-    axios.put(`http://localhost:5000/customer/update_customer/${params.id}`, {
+    axios.put(`/customer/update_customer/${params.id}`, {
       customername: val.customername,
       mobilenu: val.mobilenu
     })

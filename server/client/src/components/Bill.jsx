@@ -35,7 +35,7 @@ function Bill() {
   const ref = useRef(null);
 
   const getRate = () => {
-    axios.get("http://localhost:5000/customer/ratecustomer")
+    axios.get("/customer/ratecustomer")
       .then(function (response) {
         setVal(response.data)
       })
@@ -44,7 +44,7 @@ function Bill() {
   }
 
   const get_customerData = async () => {
-    await axios.get(`http://localhost:5000/bill/bill_data?mobilenu=${mobilenu}`, {
+    await axios.get(`/bill/bill_data?mobilenu=${mobilenu}`, {
       headers: {
         "Authorization": token
       }
@@ -129,7 +129,7 @@ function Bill() {
   const add_bill = (e) => {
     e.preventDefault()
     if (validateForm()) {
-      axios.post("http://localhost:5000/bill/add_bill", {
+      axios.post("/bill/add_bill", {
         customer_id: customer_id,
         bill_date: value.bill_date,
         booking_date: value.booking_date,

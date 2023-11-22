@@ -85,7 +85,7 @@ export default function AllWorker() {
   }, [currentPage]);
 
   const viewdata = () => {
-    axios.get(`http://localhost:5000/worker/viewworker?page_no=${currentPage}`, {
+    axios.get(`/worker/viewworker?page_no=${currentPage}`, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }
@@ -103,7 +103,7 @@ export default function AllWorker() {
     const query = e?.target?.value || "";
     setSearchQuery(query);
 
-    axios.get(`http://localhost:5000/worker/search_worker?page_no=${currentPage}&search=${query}`)
+    axios.get(`/worker/search_worker?page_no=${currentPage}&search=${query}`)
       .then(function (res) {
         setview(res.data.data);
       })

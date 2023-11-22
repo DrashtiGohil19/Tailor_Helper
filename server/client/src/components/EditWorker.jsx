@@ -14,8 +14,8 @@ export default function EditWorker({ showEdit, closeEdit, selectedId, WorkerEdit
 
     const fetchData = () => {
         const apiEndpoint = WorkerEdit
-            ? `http://localhost:5000/worker/single_worker/${selectedId}`
-            : `http://localhost:5000/customer/single_customer/${selectedId}`
+            ? `/worker/single_worker/${selectedId}`
+            : `/customer/single_customer/${selectedId}`
 
         axios.get(apiEndpoint)
             .then(function (res) {
@@ -34,8 +34,8 @@ export default function EditWorker({ showEdit, closeEdit, selectedId, WorkerEdit
     const handleEdit = (e) => {
         e.preventDefault()
         const apiEndpoint = WorkerEdit
-            ? `http://localhost:5000/worker/update_worker/${selectedId}`
-            : `http://localhost:5000/customer/update_customer/${selectedId}`
+            ? `/worker/update_worker/${selectedId}`
+            : `/customer/update_customer/${selectedId}`
 
         const dataPayload = WorkerEdit
             ? { workername: val.workername, mobilenu: val.mobilenu }

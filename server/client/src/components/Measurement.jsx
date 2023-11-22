@@ -77,7 +77,7 @@ export default function Measurement() {
     };
 
     const getData = () => {
-        axios.get(`http://localhost:5000/measurement/view_measurement?customer_id=${params.id}`)
+        axios.get(`/measurement/view_measurement?customer_id=${params.id}`)
             .then(function (response) {
                 if (response.data.data.pent_id || response.data.data.shirt_id) {
                     setDataExists(true)
@@ -171,13 +171,12 @@ export default function Measurement() {
         );
     };
 
-    console.log('id-----------', params.id);
     const handleClick = (e) => {
         e.preventDefault()
 
         if (isPantDetailsFilled() || isShirtDetailsFilled()) {
             if (!dataExists) {
-                axios.post(`http://localhost:5000/measurement/add_measurement/${params.id}`, {
+                axios.post(`/measurement/add_measurement/${params.id}`, {
                     // ---- pent data ----
                     extra_p: val.extra_p,
                     weist: val.weist,
@@ -220,7 +219,7 @@ export default function Measurement() {
                     .catch(function (error) {
                     })
             } else {
-                axios.put(`http://localhost:5000/measurement/update_map/${params.id}`, {
+                axios.put(`/measurement/update_map/${params.id}`, {
                     extra_p: val.extra_p,
                     weist: val.weist,
                     p_length: val.p_length,
