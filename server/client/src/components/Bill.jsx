@@ -5,7 +5,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import BillPage from "./BillPage";
 import ReactToPrint from "react-to-print";
-import QrModel from "./QrModel";
 import { Form } from "react-bootstrap";
 
 function Bill() {
@@ -392,7 +391,6 @@ function Bill() {
           <BillPage data={data} shirtData={shirtData} pentData={pentData} kurtaData={kurtaData} customerData={customerData} />
         </div>
       </div>
-      {showModel && <QrModel showModel={showModel} closeModel={() => setShowModel(false)} />}
     </div >
   )
 }
