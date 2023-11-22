@@ -2,6 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var logger = require('morgan');
 var path = require('path');
+const dotenv = require('dotenv');
+dotenv.config()
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -28,17 +30,16 @@ app.use('/bill', billRouter);
 
 // --------- Deployement ------------
 
-// const __dirname1 = path.resolve()
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname1, "client/build")))
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
-//   })
-// } else {
-//   app.get('/', (req, res) => {
-//     res.send("API running succesfully !")
-//   })
-// }
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"))
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client/build", "index.html"))
+  })
+} else {
+  app.get('/', (req, res) => {
+    res.send("API running succesfully !")
+  })
+}
 
 // --------- Deployement ------------
 
