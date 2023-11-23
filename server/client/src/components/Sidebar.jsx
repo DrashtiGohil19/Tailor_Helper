@@ -1,13 +1,24 @@
 import { NavLink } from "react-router-dom";
-import { FaRupeeSign } from "react-icons/fa"
-
+import { FaRupeeSign } from "react-icons/fa";
+import { useState } from "react";
+import { FaAngleDoubleLeft } from "react-icons/fa";
+import { FaAngleDoubleRight } from "react-icons/fa";
 export default function Sidebar() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleMenuItemClick = () => {
+    // Close the sidebar when a menu item is clicked
+    setSidebarOpen(false);
+  };
   return (
     <div className="wrapper">
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
-        <NavLink to="/" className="brand-link" activeClassName="active-link">
+        <NavLink className="brand-link" activeClassName="active-link">
           <img src="/images/cap.png" className="brand-image img-circle" style={{ opacity: '.8' }} />
           <span className="brand-text font-weight-light"><b>SIMPLEX TAILOR</b></span>
+          <i data-widget="pushmenu" className="d-lg-none ml-2">
+            <FaAngleDoubleLeft />
+          </i>
         </NavLink>
         <div className="sidebar">
           <nav className="mt-3">

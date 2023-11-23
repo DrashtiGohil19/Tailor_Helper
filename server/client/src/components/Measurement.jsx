@@ -304,26 +304,25 @@ export default function Measurement() {
                                     <div className="card">
                                         <div className="card-body">
                                             <div className="row">
-                                                <div className="col-sm-3">
+                                                <div className="col-md-4 col-sm-3">
                                                     <div className="form-group">
                                                         <label>Name</label>
                                                         <input type="text" className="form-control" value={val.customername} onChange={handleChange} />
                                                     </div>
                                                 </div>
-                                                <div className="col-sm-3">
+                                                <div className="col-md-4 col-sm-3">
                                                     <div className="form-group">
                                                         <label>Mobile Number</label>
                                                         <input type="number" className="form-control" value={val.mobilenu} onChange={handleChange} />
                                                     </div>
                                                 </div>
-                                                <div className="col-sm-3">
+                                                <div className="col-md-4 col-sm-3">
                                                     <div className="form-group">
                                                         <label>Bill Number</label>
                                                         <input type="number" className="form-control" value={val.bill_nu} onChange={handleChange} />
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -340,41 +339,41 @@ export default function Measurement() {
                                         <form>
                                             <div className="card-body">
                                                 <div className="row">
-                                                    <div className="col-sm-5">
-                                                        <div className="row extp">
-                                                            <div className="col-sm-4">
+                                                    <div className="col-md-12 col-lg-5">
+                                                        <div className="row">
+                                                            <div className="col-md-4">
                                                                 <input type="checkbox" className="m-1" name="extra_p" value="સાઈડ પોકેટ" checked={isExtraSelected("સાઈડ પોકેટ")} onChange={handleChange} />
                                                                 <label>સાઈડ પોકેટ</label>
                                                             </div>
-                                                            <div className="col-sm-4">
+                                                            <div className="col-md-4">
                                                                 <input type="checkbox" className="m-1" name="extra_p" value="ક્રોસ પોકેટ" checked={isExtraSelected("ક્રોસ પોકેટ")} onChange={handleChange} />
                                                                 <label>ક્રોસ પોકેટ</label>
                                                             </div>
-                                                            <div className="col-sm-4">
+                                                            <div className="col-md-4">
                                                                 <input type="checkbox" className="m-1" name="extra_p" value="હાથ સિલાઈ" checked={isExtraSelected("હાથ સિલાઈ")} onChange={handleChange} />
                                                                 <label>હાથ સિલાઈ</label>
                                                             </div>
                                                         </div>
                                                         <div className="row">
-                                                            <div className="col-sm-4">
+                                                            <div className="col-md-4">
                                                                 <input type="checkbox" className="m-1" name="extra_p" value="ગ્રીપ" checked={isExtraSelected("ગ્રીપ")} onChange={handleChange} />
                                                                 <label>ગ્રીપ</label>
                                                             </div>
-                                                            <div className="col-sm-4">
+                                                            <div className="col-md-4">
                                                                 <input type="checkbox" className="m-1" name="extra_p" value="પાછળ પોકેટ" checked={isExtraSelected("પાછળ પોકેટ")} onChange={handleChange} />
                                                                 <label>પાછળ પોકેટ</label>
                                                             </div>
-                                                            <div className="col-sm-4">
+                                                            <div className="col-md-4">
                                                                 <input type="checkbox" className="m-1" name="extra_p" value="સિંગલ ચીપટી" checked={isExtraSelected("સિંગલ ચીપટી")} onChange={handleChange} />
                                                                 <label>સિંગલ ચીપટી</label>
                                                             </div>
                                                         </div>
                                                         <div className="row">
-                                                            <div className="col-sm-4">
+                                                            <div className="col-md-4">
                                                                 <input type="checkbox" className="m-1" name="extra_p" value="ડબલ ચીપટી" checked={isExtraSelected("ડબલ ચીપટી")} onChange={handleChange} />
                                                                 <label>ડબલ ચીપટી</label>
                                                             </div>
-                                                            <div className="col-sm-4">
+                                                            <div className="col-md-4">
                                                                 <input type="checkbox" className="m-1" name="extra_p" value="બોક્સ ચીપટી" checked={isExtraSelected("બોક્સ ચીપટી")} onChange={handleChange} />
                                                                 <label>બોક્સ ચીપટી</label>
                                                             </div>
@@ -383,38 +382,38 @@ export default function Measurement() {
 
                                                     {/* =================================================================== */}
 
-                                                    <div className="col-sm-1">
+                                                    <div className="col-sm-1 col-md-2 col-lg-1">
                                                         <div className="form-group">
                                                             <label>કમર :</label>
                                                             <input type="text" className="form-control" name="weist" value={val.weist} onChange={handleChange} />
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm-1">
+                                                    <div className="col-sm-1 col-md-2 col-lg-1">
                                                         <div className="form-group">
                                                             <label>લંબાઈ :</label>
                                                             <input type="text" className="form-control" name="p_length" value={val.p_length} onChange={handleChange} />
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm-1">
+                                                    <div className="col-sm-1 col-md-2 col-lg-1">
                                                         <div className="form-group">
                                                             <label>સીટ:</label>
                                                             <input type="text" className="form-control" name="hip" value={val.hip} onChange={handleChange} />
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm-1">
+                                                    <div className="col-sm-1 col-md-2 col-lg-1">
                                                         <div className="form-group">
                                                             <label>રાઉન્ડ :</label>
                                                             <input type="text" className="form-control" name="round" value={val.round} onChange={handleChange} />
                                                         </div>
                                                     </div>
 
-                                                    <div className="col-sm-1">
+                                                    <div className="col-sm-1 col-md-2 col-lg-1">
                                                         <div className="form-group">
                                                             <label>જાંઘ:</label>
                                                             <input type="text" className="form-control" name="thigh" value={val.thigh} onChange={handleChange} />
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm-1">
+                                                    <div className="col-sm-1 col-md-2 col-lg-1">
                                                         <div className="form-group">
                                                             <label>ઘૂંટણ :</label>
                                                             <input type="text" className="form-control" name="knee" value={val.knee} onChange={handleChange} />
@@ -422,7 +421,7 @@ export default function Measurement() {
                                                             <input type="text" className="form-control mt-2" name="knee2" value={val.knee2} onChange={handleChange} />
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm-1">
+                                                    <div className="col-sm-1 col-md-2 col-lg-1">
                                                         <div className="form-group">
                                                             <label>બોટમ:</label>
                                                             <input type="text" className="form-control" name="bottom" value={val.bottom} onChange={handleChange} />

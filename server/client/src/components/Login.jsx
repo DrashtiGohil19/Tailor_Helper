@@ -18,8 +18,8 @@ export default function Login() {
             .then(function (response) {
                 if (response.data.status === "Success") {
                     localStorage.setItem("token", response.data.token)
+                    navigate('/dashboard')
                 }
-                navigate('/dashboard')
             })
             .catch(function (error) {
             })
