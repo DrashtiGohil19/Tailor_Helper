@@ -42,6 +42,13 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
                 }
             })
             .catch(function (error) {
+                toast.error("Failed to saved rate !", {
+                    autoClose: 4000,
+                    style: {
+                        backgroundColor: 'black',
+                        color: 'white',
+                    },
+                });
             })
     }
 
@@ -67,7 +74,6 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
                             <Col>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Enter name"
                                     name="shirt_rate"
                                     value={val.shirt_rate}
                                     onChange={handleChange}
@@ -79,7 +85,6 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
                             <Col>
                                 <Form.Control
                                     type="number"
-                                    placeholder="Enter mobile number"
                                     name="pent_rate"
                                     value={val.pent_rate}
                                     onChange={handleChange}
@@ -91,7 +96,6 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
                             <Col>
                                 <Form.Control
                                     type="number"
-                                    placeholder="Enter mobile number"
                                     name="kurta_rate"
                                     value={val.kurta_rate}
                                     onChange={handleChange}
