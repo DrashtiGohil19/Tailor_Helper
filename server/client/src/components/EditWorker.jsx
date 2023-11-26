@@ -17,7 +17,11 @@ export default function EditWorker({ showEdit, closeEdit, selectedId, WorkerEdit
             ? `/worker/single_worker/${selectedId}`
             : `/customer/single_customer/${selectedId}`
 
-        axios.get(apiEndpoint)
+        axios.get(apiEndpoint, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
             .then(function (res) {
                 setval(res.data.data)
             })
@@ -41,7 +45,11 @@ export default function EditWorker({ showEdit, closeEdit, selectedId, WorkerEdit
             ? { workername: val.workername, mobilenu: val.mobilenu }
             : { customername: val.customername, mobilenu: val.mobilenu };
 
-        axios.put(apiEndpoint, dataPayload)
+        axios.put(apiEndpoint, dataPayload, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
             .then(function (response) {
                 if (response.data.status === "success") {
                     closeEdit()

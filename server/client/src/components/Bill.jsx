@@ -27,7 +27,6 @@ function Bill() {
   const [pentAmount, setPentAmount] = useState(0);
   const [kurtaAmount, setKurtaAmount] = useState(0);
   const [customer_id, setCustomer_id] = useState()
-  const [showModel, setShowModel] = useState(false)
   const [validationErrors, setValidationErrors] = useState({});
   const token = localStorage.getItem("token")
 
@@ -174,7 +173,6 @@ function Bill() {
     getRate()
     get_customerData()
     document.title = "Simplex Tailor - Bill Page"
-
   }, [mobilenu, customer_id])
 
   const handleChange = (e) => {
@@ -200,12 +198,6 @@ function Bill() {
             <div className="row mb-2">
               <div className="col-sm-6">
                 <h1>Generate Bill</h1>
-              </div>
-              <div className="col-sm-6">
-                <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item"><a href="#">Home</a></li>
-                  <li className="breadcrumb-item active">Generate Bill</li>
-                </ol>
               </div>
             </div>
           </div>
@@ -306,7 +298,7 @@ function Bill() {
                             <td>Shirt</td>
                             <td>
                               <div className="d-flex justify-content-center">
-                                <input type="text" className="w-25 form-control form-control-sm text-center" name="shirt_qty" value={value.shirt_qty} onChange={handleChange} />
+                                <input type="text" className="w-50 form-control form-control-sm text-center" name="shirt_qty" value={value.shirt_qty} onChange={handleChange} />
                               </div>
                             </td>
                             <td>{val.shirt_rate}</td>
@@ -317,7 +309,7 @@ function Bill() {
                             <td>Pent</td>
                             <td>
                               <div className="d-flex justify-content-center">
-                                <input type="text" className={`form-control w-25 form-control-sm text-center`} name="pent_qty" value={value.pent_qty} onChange={handleChange} />
+                                <input type="text" className="form-control w-50 form-control-sm text-center" name="pent_qty" value={value.pent_qty} onChange={handleChange} />
                               </div>
                             </td>
                             <td>{val.pent_rate}</td>
@@ -328,7 +320,7 @@ function Bill() {
                             <td>Kurta</td>
                             <td>
                               <div className="d-flex justify-content-center">
-                                <input type="text" className="w-25 form-control form-control-sm text-center" name="kurta_qty" value={value.kurta_qty} onChange={handleChange} />
+                                <input type="text" className="w-50 form-control form-control-sm text-center" name="kurta_qty" value={value.kurta_qty} onChange={handleChange} />
                               </div>
                             </td>
                             <td>{val.kurta_rate}</td>

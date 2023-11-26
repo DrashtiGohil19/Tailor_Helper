@@ -11,34 +11,31 @@ const pentSchema = new mongoose.Schema({
         type: Array
     },
     weist: {
-        type: String,
+        type: String, default: ""
     },
     p_length: {
-        type: String
+        type: String, default: ""
     },
     hip: {
-        type: String
+        type: String, default: ""
     },
     round: {
-        type: String
+        type: String, default: ""
     },
     thigh: {
-        type: String
+        type: String, default: ""
     },
     knee: {
-        type: String
+        type: String, default: ""
     },
     knee1: {
-        type: String
+        type: String, default: ""
     },
     knee2: {
-        type: String
+        type: String, default: ""
     },
     bottom: {
-        type: String
-    },
-    pent_qty: {
-        type: String
+        type: String, default: ""
     }
 })
 

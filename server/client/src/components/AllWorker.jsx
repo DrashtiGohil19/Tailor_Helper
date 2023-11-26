@@ -103,7 +103,11 @@ export default function AllWorker() {
     const query = e?.target?.value || "";
     setSearchQuery(query);
 
-    axios.get(`/worker/search_worker?page_no=${currentPage}&search=${query}`)
+    axios.get(`/worker/search_worker?page_no=${currentPage}&search=${query}`, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    })
       .then(function (res) {
         setview(res.data.data);
       })

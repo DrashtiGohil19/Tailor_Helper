@@ -73,9 +73,12 @@ export default function CustomerList() {
     searchCustomer();
     document.title = "Simplex Tailor - Customer List"
   }, [currentPage]);
-
   const viewdata = () => {
-    axios.get(`/customer/view_customer?page_no=${currentPage}`)
+    axios.get(`http://localhost:5000/customer/view_customer?page_no=${currentPage}`, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    })
       .then(function (res) {
         setview(res.data.data);
         setTotalPages(res.data.totalpage)
@@ -86,7 +89,11 @@ export default function CustomerList() {
     const query = e?.target?.value || "";
     setSearchQuery(query);
 
-    axios.get(`/customer/search_customer?page_no=${currentPage}&search=${query}`)
+    axios.get(`http://localhost:5000/customer/search_customer?page_no=${currentPage}&search=${query}`, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    })
       .then(function (res) {
         setview(res.data.data);
       })

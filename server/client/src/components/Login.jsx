@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function Login() {
 
@@ -9,9 +10,9 @@ export default function Login() {
         password: ""
     })
     const navigate = useNavigate()
-
+    console.log(localStorage.getItem("token"));
     const handleLogin = () => {
-        axios.post('/login', {
+        axios.post('http://localhost:5000/login', {
             email: val.email,
             password: val.password
         })
@@ -19,9 +20,25 @@ export default function Login() {
                 if (response.data.status === "Success") {
                     localStorage.setItem("token", response.data.token)
                     navigate('/dashboard')
-                }
+                } else (
+                    toast.error(response.data.status, {
+                        autoClose: 4000,
+                        style: {
+                            backgroundColor: 'black',
+                            color: 'white',
+                        },
+                    })
+                )
+
             })
             .catch(function (error) {
+                toast.error("Failed to login !" + error, {
+                    autoClose: 4000,
+                    style: {
+                        backgroundColor: 'black',
+                        color: 'white',
+                    },
+                })
             })
     }
 

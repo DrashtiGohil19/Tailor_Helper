@@ -9,7 +9,11 @@ export default function DeleteData({ showDelete, closeDelete, DelWorker, selecte
             ? `/worker/delete_worker/${selectedId}`
             : `/customer/delete_customer/${selectedId}`
 
-        axios.delete(apiEndpoint)
+        axios.delete(apiEndpoint, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
             .then(function (response) {
                 toast.success('Data deleted succesfully !', {
                     autoClose: 5000,

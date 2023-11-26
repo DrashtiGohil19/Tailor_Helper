@@ -53,7 +53,11 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
                 ? { workername: val.name, mobilenu: val.mobilenu }
                 : { name: val.name, mobilenu: val.mobilenu }
 
-            axios.post(apiEndpoint, dataPayload)
+            axios.post(apiEndpoint, dataPayload, {
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            })
                 .then(function (response) {
                     if (response.data.status === 'success') {
                         closeModal()

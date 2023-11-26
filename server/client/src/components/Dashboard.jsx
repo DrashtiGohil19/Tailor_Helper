@@ -100,59 +100,60 @@ export default function Dashboard() {
                         justify
                     >
                         {/* ------------------ delivery alert tab ------------------------- */}
+
                         <Tab eventKey="delivery alert" title='Delivery Alert'>
                             <section className="content">
                                 <div className="container-fluid">
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <div className="card">
-                                                <div className="card-body table-responsive">
-                                                    <table className="table table-bordered table-hover text-center responsive">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Alert</th>
-                                                                <th>Name</th>
-                                                                <th>Bill Nu.</th>
-                                                                <th>Boking Date</th>
-                                                                <th>Delivery Date</th>
-                                                                <th>Shirt</th>
-                                                                <th>Pent</th>
-                                                                <th>Kurta</th>
-                                                                <th>Total</th>
-                                                                <th>Status</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {
-                                                                alert?.map((item, index) => {
-                                                                    const today = new Date().toLocaleDateString('en-GB')
-                                                                    const deliveryDate = new Date(item.delivery_date).toLocaleDateString('en-GB');
-                                                                    const isRowRed = deliveryDate < today;
-                                                                    return (
-                                                                        <tr key={index} style={{ color: isRowRed ? '#d00000' : '', fontWeight: isRowRed ? '500' : '' }}>
-                                                                            {
-                                                                                isRowRed ? <td style={{ color: '#dd1c1a', fontSize: 20, padding: 5 }}><GoAlertFill /></td> : <td></td>
-                                                                            }
-                                                                            <td style={{ textTransform: 'capitalize' }}>{item.customer_id.customername}</td>
-                                                                            <td>{item.customer_id.bill_nu}</td>
-                                                                            <td>{new Date(item.booking_date).toLocaleDateString('en-GB')}</td>
-                                                                            <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
-                                                                            <td>{item.shirt_qty}</td>
-                                                                            <td>{item.pent_qty}</td>
-                                                                            <td>{item.kurta_qty}</td>
-                                                                            <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
-                                                                            <td style={{ color: item.status === 0 ? '#ff8800' : item.status === 1 ? 'green' : '', fontSize: 20, padding: 5 }}>
-                                                                                {item.status === 0 ? <GoAlertFill /> : <AiFillCheckSquare />}
-                                                                            </td>
-                                                                        </tr>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                    {/* <div className="row">
+                                        <div className="col-12"> */}
+                                    <div className="card">
+                                        <div className="card-body table-responsive">
+                                            <table className="table table-bordered table-hover text-center responsive">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Alert</th>
+                                                        <th>Name</th>
+                                                        <th>Bill Nu.</th>
+                                                        <th>Boking Date</th>
+                                                        <th>Delivery Date</th>
+                                                        <th>Shirt</th>
+                                                        <th>Pent</th>
+                                                        <th>Kurta</th>
+                                                        <th>Total</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        alert?.map((item, index) => {
+                                                            const today = new Date().toLocaleDateString('en-GB')
+                                                            const deliveryDate = new Date(item.delivery_date).toLocaleDateString('en-GB');
+                                                            const isRowRed = deliveryDate < today;
+                                                            return (
+                                                                <tr key={index} style={{ color: isRowRed ? '#d00000' : '', fontWeight: isRowRed ? '500' : '' }}>
+                                                                    {
+                                                                        isRowRed ? <td style={{ color: '#dd1c1a', fontSize: 20, padding: 5 }}><GoAlertFill /></td> : <td></td>
+                                                                    }
+                                                                    <td style={{ textTransform: 'capitalize' }}>{item.customer_id.customername}</td>
+                                                                    <td>{item.customer_id.bill_nu}</td>
+                                                                    <td>{new Date(item.booking_date).toLocaleDateString('en-GB')}</td>
+                                                                    <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
+                                                                    <td>{item.shirt_qty}</td>
+                                                                    <td>{item.pent_qty}</td>
+                                                                    <td>{item.kurta_qty}</td>
+                                                                    <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
+                                                                    <td style={{ color: item.status === 0 ? '#ff8800' : item.status === 1 ? 'green' : '', fontSize: 20, padding: 5 }}>
+                                                                        {item.status === 0 ? <GoAlertFill /> : <AiFillCheckSquare />}
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
+                                        {/* </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </section>
@@ -162,54 +163,53 @@ export default function Dashboard() {
                         <Tab eventKey="pending order" title="Pending Order">
                             <section className="content">
                                 <div className="container-fluid">
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <div className="card">
-                                                <div className="card-body table-responsive">
-                                                    <table className="table table-bordered table-hover text-center responsive" >
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Name</th>
-                                                                <th>Bill Nu.</th>
-                                                                <th>Boking Date</th>
-                                                                <th>Delivery Date</th>
-                                                                <th>Quentity</th>
-                                                                <th>Status</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {
-                                                                pending?.map((item, index) => {
-                                                                    return (
-                                                                        <tr key={index}>
-                                                                            <td style={{ textTransform: 'capitalize' }}>{item.customer_id.customername}</td>
-                                                                            <td>{item.customer_id.bill_nu}</td>
-                                                                            <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
-                                                                            <td>{new Date(item.booking_date).toLocaleDateString('en-GB')}</td>
-                                                                            <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
-                                                                            <td>
-                                                                                <select onChange={(e) => handleChange(e, item._id)}>
-                                                                                    <option value={0}>Pending</option>
-                                                                                    <option value={1}>Complete</option>
-                                                                                    <option value={2}>Deliver</option>
-                                                                                </select>
-                                                                            </td>
-                                                                        </tr>
+                                    {/* <div className="row">
+                                        <div className="col-12"> */}
+                                    <div className="card">
+                                        <div className="card-body table-responsive">
+                                            <table className="table table-bordered table-hover text-center responsive" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Bill Nu.</th>
+                                                        <th>Boking Date</th>
+                                                        <th>Delivery Date</th>
+                                                        <th>Quentity</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        pending?.map((item, index) => {
+                                                            return (
+                                                                <tr key={index}>
+                                                                    <td style={{ textTransform: 'capitalize' }}>{item.customer_id.customername}</td>
+                                                                    <td>{item.customer_id.bill_nu}</td>
+                                                                    <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
+                                                                    <td>{new Date(item.booking_date).toLocaleDateString('en-GB')}</td>
+                                                                    <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
+                                                                    <td>
+                                                                        <select onChange={(e) => handleChange(e, item._id)}>
+                                                                            <option value={0}>Pending</option>
+                                                                            <option value={1}>Complete</option>
+                                                                            <option value={2}>Deliver</option>
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
 
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
+                                        {/* </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </section>
                         </Tab>
-
-                        {/* --------------------------- completed order tab ----------------------- */}
+                        {/* ------------------ completed order tab ----------------------- */}
                         <Tab eventKey="completed order" title="Completed Order">
                             <section className="content">
                                 <div className="container-fluid">
@@ -258,7 +258,7 @@ export default function Dashboard() {
                             </section>
                         </Tab>
 
-                        {/* ---------------------------- delivery alert tab --------------------- */}
+                        {/* ------------------- delivery alert tab --------------------- */}
                         <Tab eventKey="delivered order" title="Delivered Order">
                             <section className="content">
                                 <div className="container-fluid">

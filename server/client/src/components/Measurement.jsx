@@ -77,7 +77,11 @@ export default function Measurement() {
     };
 
     const getData = () => {
-        axios.get(`/measurement/view_measurement?customer_id=${params.id}`)
+        axios.get(`http://localhost:5000/measurement/view_measurement?customer_id=${params.id}`, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
             .then(function (response) {
                 if (response.data.data.pent_id || response.data.data.shirt_id) {
                     setDataExists(true)
@@ -124,6 +128,139 @@ export default function Measurement() {
             })
     }
 
+    const isPantDetailsFilled = () => {
+        return Object.entries(val).some(
+            ([key, value]) => key !== 'extra_p' && key !== 'name' && key !== 'mobilenu' && key !== 'bill_nu' && key.startsWith('p_') && typeof value === 'string' && value.trim() !== ''
+        );
+    };
+
+    const isShirtDetailsFilled = () => {
+        return Object.entries(val).some(
+            ([key, value]) => key !== 'extra_s' && key !== 'name' && key !== 'mobilenu' && key !== 'bill_nu' && key.startsWith('s_') && typeof value === 'string' && value.trim() !== ''
+        );
+    };
+
+    const handleClick = () => {
+
+        if (isPantDetailsFilled() || isShirtDetailsFilled()) {
+            if (!dataExists) {
+                axios.post(`http://localhost:5000/measurement/add_measurement/${params.id}`, {
+                    // ---- pent data ----
+                    extra_p: val.extra_p,
+                    weist: val.weist,
+                    p_length: val.p_length,
+                    hip: val.hip,
+                    round: val.round,
+                    thigh: val.thigh,
+                    knee: val.knee,
+                    knee1: val.knee1,
+                    knee2: val.knee2,
+                    bottom: val.bottom,
+
+                    // ---- shirt data ----
+                    extra_s: val.extra_s,
+                    s_length: val.s_length,
+                    shoulder: val.shoulder,
+                    sleeve: val.sleeve,
+                    sleeve1: val.sleeve1,
+                    sleeve2: val.sleeve2,
+                    chest: val.chest,
+                    chest1: val.chest1,
+                    chest2: val.chest2,
+                    front: val.front,
+                    front1: val.front1,
+                    front2: val.front2,
+                    coller: val.coller,
+                    cuff: val.cuff,
+                }, {
+                    headers: {
+                        'Authorization': localStorage.getItem('token')
+                    }
+                })
+                    .then(function (res) {
+                        if (res.data.status === 'success') {
+                            toast.success("Measurement Saved Succesfully", {
+                                autoClose: 4000,
+                                style: {
+                                    backgroundColor: 'black',
+                                    color: 'white',
+                                },
+                            });
+                        }
+                    })
+                    .catch(function (error) {
+                        toast.error("Failed to save measurement !", {
+                            autoClose: 4000,
+                            style: {
+                                backgroundColor: 'black',
+                                color: 'white',
+                            },
+                        })
+                    })
+            } else {
+                axios.put(`/measurement/update_map/${params.id}`, {
+                    extra_p: val.extra_p,
+                    weist: val.weist,
+                    p_length: val.p_length,
+                    hip: val.hip,
+                    round: val.round,
+                    thigh: val.thigh,
+                    knee: val.knee,
+                    knee1: val.knee1,
+                    knee2: val.knee2,
+                    bottom: val.bottom,
+
+                    extra_s: val.extra_s,
+                    s_length: val.s_length,
+                    shoulder: val.shoulder,
+                    sleeve: val.sleeve,
+                    sleeve1: val.sleeve1,
+                    sleeve2: val.sleeve2,
+                    chest: val.chest,
+                    chest1: val.chest1,
+                    chest2: val.chest2,
+                    front: val.front,
+                    front1: val.front1,
+                    front2: val.front2,
+                    coller: val.coller,
+                    cuff: val.cuff,
+                }, {
+                    headers: {
+                        'Authorization': localStorage.getItem('token')
+                    }
+                })
+                    .then(function (res) {
+                        if (res.data.status === 'success') {
+                            toast.success("Measurement Updated Succesfully", {
+                                autoClose: 4000,
+                                style: {
+                                    backgroundColor: 'black',
+                                    color: 'white',
+                                },
+                            });
+                        }
+                    })
+                    .catch(function (error) {
+                        toast.error("Failed to update measurement !", {
+                            autoClose: 4000,
+                            style: {
+                                backgroundColor: 'black',
+                                color: 'white',
+                            },
+                        })
+                    })
+            }
+        } else {
+            toast.error("Please fill in either pant or shirt details before saving.", {
+                autoClose: 4000,
+                style: {
+                    backgroundColor: 'black',
+                    color: 'white',
+                },
+            });
+        }
+    }
+
     const customerData = {
         name: val.customername,
         bill_nu: val.bill_nu
@@ -159,118 +296,6 @@ export default function Measurement() {
         cuff: val.cuff,
     }
 
-    const isPantDetailsFilled = () => {
-        return Object.entries(val).some(
-            ([key, value]) => key !== 'extra_p' && key !== 'name' && key !== 'mobilenu' && key !== 'bill_nu' && key.startsWith('p_') && typeof value === 'string' && value.trim() !== ''
-        );
-    };
-
-    const isShirtDetailsFilled = () => {
-        return Object.entries(val).some(
-            ([key, value]) => key !== 'extra_s' && key !== 'name' && key !== 'mobilenu' && key !== 'bill_nu' && key.startsWith('s_') && typeof value === 'string' && value.trim() !== ''
-        );
-    };
-
-    const handleClick = (e) => {
-        e.preventDefault()
-
-        if (isPantDetailsFilled() || isShirtDetailsFilled()) {
-            if (!dataExists) {
-                axios.post(`/measurement/add_measurement/${params.id}`, {
-                    // ---- pent data ----
-                    extra_p: val.extra_p,
-                    weist: val.weist,
-                    p_length: val.p_length,
-                    hip: val.hip,
-                    round: val.round,
-                    thigh: val.thigh,
-                    knee: val.knee,
-                    knee1: val.knee1,
-                    knee2: val.knee2,
-                    bottom: val.bottom,
-
-                    // ---- shirt data ----
-                    extra_s: val.extra_s,
-                    s_length: val.s_length,
-                    shoulder: val.shoulder,
-                    sleeve: val.sleeve,
-                    sleeve1: val.sleeve1,
-                    sleeve2: val.sleeve2,
-                    chest: val.chest,
-                    chest1: val.chest1,
-                    chest2: val.chest2,
-                    front: val.front,
-                    front1: val.front1,
-                    front2: val.front2,
-                    coller: val.coller,
-                    cuff: val.cuff,
-                })
-                    .then(function (res) {
-                        if (res.data.status === 'success') {
-                            toast.success("Measurement Saved Succesfully", {
-                                autoClose: 4000,
-                                style: {
-                                    backgroundColor: 'black',
-                                    color: 'white',
-                                },
-                            });
-                        }
-                    })
-                    .catch(function (error) {
-                    })
-            } else {
-                axios.put(`/measurement/update_map/${params.id}`, {
-                    extra_p: val.extra_p,
-                    weist: val.weist,
-                    p_length: val.p_length,
-                    hip: val.hip,
-                    round: val.round,
-                    thigh: val.thigh,
-                    knee: val.knee,
-                    knee1: val.knee1,
-                    knee2: val.knee2,
-                    bottom: val.bottom,
-
-                    extra_s: val.extra_s,
-                    s_length: val.s_length,
-                    shoulder: val.shoulder,
-                    sleeve: val.sleeve,
-                    sleeve1: val.sleeve1,
-                    sleeve2: val.sleeve2,
-                    chest: val.chest,
-                    chest1: val.chest1,
-                    chest2: val.chest2,
-                    front: val.front,
-                    front1: val.front1,
-                    front2: val.front2,
-                    coller: val.coller,
-                    cuff: val.cuff,
-                })
-                    .then(function (res) {
-                        if (res.data.status === 'success') {
-                            toast.success("Measurement Updated Succesfully", {
-                                autoClose: 4000,
-                                style: {
-                                    backgroundColor: 'black',
-                                    color: 'white',
-                                },
-                            });
-                        }
-                    })
-                    .catch(function (error) {
-                    })
-            }
-        } else {
-            toast.error("Please fill in either pant or shirt details before saving.", {
-                autoClose: 4000,
-                style: {
-                    backgroundColor: 'black',
-                    color: 'white',
-                },
-            });
-        }
-    }
-
     useEffect(() => {
         getData()
         document.title = "Simplex Tailor - Measurement"
@@ -297,244 +322,238 @@ export default function Measurement() {
                     </div>
                 </section>
                 <section className="content measurement">
-                    <form >
-                        <div className="container-fluid">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col-md-4 col-sm-3">
-                                                    <div className="form-group">
-                                                        <label>Name</label>
-                                                        <input type="text" className="form-control" value={val.customername} onChange={handleChange} />
-                                                    </div>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-md-4 col-sm-3">
+                                                <div className="form-group">
+                                                    <label>Name</label>
+                                                    <input type="text" className="form-control" value={val.customername} onChange={handleChange} />
                                                 </div>
-                                                <div className="col-md-4 col-sm-3">
-                                                    <div className="form-group">
-                                                        <label>Mobile Number</label>
-                                                        <input type="number" className="form-control" value={val.mobilenu} onChange={handleChange} />
-                                                    </div>
+                                            </div>
+                                            <div className="col-md-4 col-sm-3">
+                                                <div className="form-group">
+                                                    <label>Mobile Number</label>
+                                                    <input type="number" className="form-control" value={val.mobilenu} onChange={handleChange} />
                                                 </div>
-                                                <div className="col-md-4 col-sm-3">
-                                                    <div className="form-group">
-                                                        <label>Bill Number</label>
-                                                        <input type="number" className="form-control" value={val.bill_nu} onChange={handleChange} />
-                                                    </div>
+                                            </div>
+                                            <div className="col-md-4 col-sm-3">
+                                                <div className="form-group">
+                                                    <label>Bill Number</label>
+                                                    <input type="number" className="form-control" value={val.bill_nu} onChange={handleChange} />
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* ====================== measurement ==================== */}
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="card card-primary">
-                                        <div className="card-header">
-                                            <h3 className="card-title">Pent Measurement</h3>
-                                        </div>
-
-                                        <form>
-                                            <div className="card-body">
-                                                <div className="row">
-                                                    <div className="col-md-12 col-lg-5">
-                                                        <div className="row">
-                                                            <div className="col-md-4">
-                                                                <input type="checkbox" className="m-1" name="extra_p" value="સાઈડ પોકેટ" checked={isExtraSelected("સાઈડ પોકેટ")} onChange={handleChange} />
-                                                                <label>સાઈડ પોકેટ</label>
-                                                            </div>
-                                                            <div className="col-md-4">
-                                                                <input type="checkbox" className="m-1" name="extra_p" value="ક્રોસ પોકેટ" checked={isExtraSelected("ક્રોસ પોકેટ")} onChange={handleChange} />
-                                                                <label>ક્રોસ પોકેટ</label>
-                                                            </div>
-                                                            <div className="col-md-4">
-                                                                <input type="checkbox" className="m-1" name="extra_p" value="હાથ સિલાઈ" checked={isExtraSelected("હાથ સિલાઈ")} onChange={handleChange} />
-                                                                <label>હાથ સિલાઈ</label>
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-md-4">
-                                                                <input type="checkbox" className="m-1" name="extra_p" value="ગ્રીપ" checked={isExtraSelected("ગ્રીપ")} onChange={handleChange} />
-                                                                <label>ગ્રીપ</label>
-                                                            </div>
-                                                            <div className="col-md-4">
-                                                                <input type="checkbox" className="m-1" name="extra_p" value="પાછળ પોકેટ" checked={isExtraSelected("પાછળ પોકેટ")} onChange={handleChange} />
-                                                                <label>પાછળ પોકેટ</label>
-                                                            </div>
-                                                            <div className="col-md-4">
-                                                                <input type="checkbox" className="m-1" name="extra_p" value="સિંગલ ચીપટી" checked={isExtraSelected("સિંગલ ચીપટી")} onChange={handleChange} />
-                                                                <label>સિંગલ ચીપટી</label>
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-md-4">
-                                                                <input type="checkbox" className="m-1" name="extra_p" value="ડબલ ચીપટી" checked={isExtraSelected("ડબલ ચીપટી")} onChange={handleChange} />
-                                                                <label>ડબલ ચીપટી</label>
-                                                            </div>
-                                                            <div className="col-md-4">
-                                                                <input type="checkbox" className="m-1" name="extra_p" value="બોક્સ ચીપટી" checked={isExtraSelected("બોક્સ ચીપટી")} onChange={handleChange} />
-                                                                <label>બોક્સ ચીપટી</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* =================================================================== */}
-
-                                                    <div className="col-sm-1 col-md-2 col-lg-1">
-                                                        <div className="form-group">
-                                                            <label>કમર :</label>
-                                                            <input type="text" className="form-control" name="weist" value={val.weist} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1 col-md-2 col-lg-1">
-                                                        <div className="form-group">
-                                                            <label>લંબાઈ :</label>
-                                                            <input type="text" className="form-control" name="p_length" value={val.p_length} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1 col-md-2 col-lg-1">
-                                                        <div className="form-group">
-                                                            <label>સીટ:</label>
-                                                            <input type="text" className="form-control" name="hip" value={val.hip} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1 col-md-2 col-lg-1">
-                                                        <div className="form-group">
-                                                            <label>રાઉન્ડ :</label>
-                                                            <input type="text" className="form-control" name="round" value={val.round} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-sm-1 col-md-2 col-lg-1">
-                                                        <div className="form-group">
-                                                            <label>જાંઘ:</label>
-                                                            <input type="text" className="form-control" name="thigh" value={val.thigh} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1 col-md-2 col-lg-1">
-                                                        <div className="form-group">
-                                                            <label>ઘૂંટણ :</label>
-                                                            <input type="text" className="form-control" name="knee" value={val.knee} onChange={handleChange} />
-                                                            <input type="text" className="form-control mt-2" name="knee1" value={val.knee1} onChange={handleChange} />
-                                                            <input type="text" className="form-control mt-2" name="knee2" value={val.knee2} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1 col-md-2 col-lg-1">
-                                                        <div className="form-group">
-                                                            <label>બોટમ:</label>
-                                                            <input type="text" className="form-control" name="bottom" value={val.bottom} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                {/* ============================================================= */}
-                                <div className="col-md-12">
-                                    <div className="card card-primary">
-                                        <div className="card-header">
-                                            <h3 className="card-title">Shirt Measurement</h3>
-                                        </div>
-                                        <form>
-                                            <div className="card-body">
-                                                <div className="row">
-                                                    <div className="col-sm-5">
-                                                        <div className="row">
-                                                            <div className="col-sm-4">
-                                                                <input type="checkbox" className="m-1" name="extra_s" value="ઓપન" checked={isExtraSelected("ઓપન")} onChange={handleChange} />
-                                                                <label>ઓપન</label>
-                                                            </div>
-                                                            <div className="col-sm-4">
-                                                                <input type="checkbox" className="m-1" name="extra_s" value="બુ-શર્ટ" checked={isExtraSelected("બુ-શર્ટ")} onChange={handleChange} />
-                                                                <label>બુ-શર્ટ</label>
-                                                            </div>
-                                                            <div className="col-sm-4">
-                                                                <input type="checkbox" className="m-1" name="extra_s" value="ડાર્ટ" checked={isExtraSelected("ડાર્ટ")} onChange={handleChange} />
-                                                                <label>ડાર્ટ</label>
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-sm-4">
-                                                                <input type="checkbox" className="m-1" name="extra_s" value="પોકેટ" checked={isExtraSelected("પોકેટ")} onChange={handleChange} />
-                                                                <label>પોકેટ</label>
-                                                            </div>
-                                                            <div className="col-sm-4">
-                                                                <input type="checkbox" className="m-1" name="extra_s" value="સ્ટેન્ડ કોલર" checked={isExtraSelected("સ્ટેન્ડ કોલર")} onChange={handleChange} />
-                                                                <label>સ્ટેન્ડ કોલર</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1">
-                                                        <div className="form-group">
-                                                            <label>લંબાઈ :</label>
-                                                            <input type="text" className="form-control" name="s_length" value={val.s_length} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1">
-                                                        <div className="form-group">
-                                                            <label>શોલ્ડર :</label>
-                                                            <input type="text" className="form-control" name="shoulder" value={val.shoulder} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1">
-                                                        <div className="form-group">
-                                                            <label>સ્લીવ :</label>
-                                                            <input type="text" className="form-control" name="sleeve" value={val.sleeve} onChange={handleChange} />
-                                                            <input type="text" className="form-control mt-2" name="sleeve1" value={val.sleeve1} onChange={handleChange} />
-                                                            <input type="text" className="form-control mt-2" name="sleeve2" value={val.sleeve2} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1">
-                                                        <div className="form-group">
-                                                            <label>છાતી :</label>
-                                                            <input type="text" className="form-control" name="chest" value={val.chest} onChange={handleChange} />
-                                                            <input type="text" className="form-control mt-2" name="chest1" value={val.chest1} onChange={handleChange} />
-                                                            <input type="text" className="form-control mt-2" name="chest2" value={val.chest2} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1">
-                                                        <div className="form-group">
-                                                            <label>ફ્રન્ટ :</label>
-                                                            <input type="text" className="form-control" name="front" value={val.front} onChange={handleChange} />
-                                                            <input type="text" className="form-control mt-2" name="front1" value={val.front1} onChange={handleChange} />
-                                                            <input type="text" className="form-control mt-2" name="front2" value={val.front2} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1">
-                                                        <div className="form-group">
-                                                            <label>કોલર :</label>
-                                                            <input type="text" className="form-control" name="coller" value={val.coller} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-1">
-                                                        <div className="form-group">
-                                                            <label>કફ :</label>
-                                                            <input type="text" className="form-control" name="cuff" value={val.cuff} onChange={handleChange} />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="card-footer">
-                            <div className="row">
-                                <div className="col-sm-6">
-                                    <button type="submit" className="btn btn-primary mr-3" onClick={handleClick}>Save</button>
-                                    <ReactToPrint
-                                        trigger={() => <button className="btn btn-primary">Get Print</button>}
-                                        content={() => ref.current}
-                                    />
+                        {/* ====================== measurement ==================== */}
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="card card-primary">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Pent Measurement</h3>
+                                    </div>
+
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-md-12 col-lg-5">
+                                                <div className="row">
+                                                    <div className="col-md-4">
+                                                        <input type="checkbox" className="m-1" name="extra_p" value="સાઈડ પોકેટ" checked={isExtraSelected("સાઈડ પોકેટ")} onChange={handleChange} />
+                                                        <label>સાઈડ પોકેટ</label>
+                                                    </div>
+                                                    <div className="col-md-4">
+                                                        <input type="checkbox" className="m-1" name="extra_p" value="ક્રોસ પોકેટ" checked={isExtraSelected("ક્રોસ પોકેટ")} onChange={handleChange} />
+                                                        <label>ક્રોસ પોકેટ</label>
+                                                    </div>
+                                                    <div className="col-md-4">
+                                                        <input type="checkbox" className="m-1" name="extra_p" value="હાથ સિલાઈ" checked={isExtraSelected("હાથ સિલાઈ")} onChange={handleChange} />
+                                                        <label>હાથ સિલાઈ</label>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-4">
+                                                        <input type="checkbox" className="m-1" name="extra_p" value="ગ્રીપ" checked={isExtraSelected("ગ્રીપ")} onChange={handleChange} />
+                                                        <label>ગ્રીપ</label>
+                                                    </div>
+                                                    <div className="col-md-4">
+                                                        <input type="checkbox" className="m-1" name="extra_p" value="પાછળ પોકેટ" checked={isExtraSelected("પાછળ પોકેટ")} onChange={handleChange} />
+                                                        <label>પાછળ પોકેટ</label>
+                                                    </div>
+                                                    <div className="col-md-4">
+                                                        <input type="checkbox" className="m-1" name="extra_p" value="સિંગલ ચીપટી" checked={isExtraSelected("સિંગલ ચીપટી")} onChange={handleChange} />
+                                                        <label>સિંગલ ચીપટી</label>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-4">
+                                                        <input type="checkbox" className="m-1" name="extra_p" value="ડબલ ચીપટી" checked={isExtraSelected("ડબલ ચીપટી")} onChange={handleChange} />
+                                                        <label>ડબલ ચીપટી</label>
+                                                    </div>
+                                                    <div className="col-md-4">
+                                                        <input type="checkbox" className="m-1" name="extra_p" value="બોક્સ ચીપટી" checked={isExtraSelected("બોક્સ ચીપટી")} onChange={handleChange} />
+                                                        <label>બોક્સ ચીપટી</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* =================================================================== */}
+
+                                            <div className="col-sm-1 col-md-2 col-lg-1">
+                                                <div className="form-group">
+                                                    <label>કમર :</label>
+                                                    <input type="text" className="form-control" name="weist" value={val.weist} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1 col-md-2 col-lg-1">
+                                                <div className="form-group">
+                                                    <label>લંબાઈ :</label>
+                                                    <input type="text" className="form-control" name="p_length" value={val.p_length} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1 col-md-2 col-lg-1">
+                                                <div className="form-group">
+                                                    <label>સીટ:</label>
+                                                    <input type="text" className="form-control" name="hip" value={val.hip} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1 col-md-2 col-lg-1">
+                                                <div className="form-group">
+                                                    <label>રાઉન્ડ :</label>
+                                                    <input type="text" className="form-control" name="round" value={val.round} onChange={handleChange} />
+                                                </div>
+                                            </div>
+
+                                            <div className="col-sm-1 col-md-2 col-lg-1">
+                                                <div className="form-group">
+                                                    <label>જાંઘ:</label>
+                                                    <input type="text" className="form-control" name="thigh" value={val.thigh} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1 col-md-2 col-lg-1">
+                                                <div className="form-group">
+                                                    <label>ઘૂંટણ :</label>
+                                                    <input type="text" className="form-control" name="knee" value={val.knee} onChange={handleChange} />
+                                                    <input type="text" className="form-control mt-2" name="knee1" value={val.knee1} onChange={handleChange} />
+                                                    <input type="text" className="form-control mt-2" name="knee2" value={val.knee2} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1 col-md-2 col-lg-1">
+                                                <div className="form-group">
+                                                    <label>બોટમ:</label>
+                                                    <input type="text" className="form-control" name="bottom" value={val.bottom} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* ============================================================= */}
+                            <div className="col-md-12">
+                                <div className="card card-primary">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Shirt Measurement</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-sm-5">
+                                                <div className="row">
+                                                    <div className="col-sm-4">
+                                                        <input type="checkbox" className="m-1" name="extra_s" value="ઓપન" checked={isExtraSelected("ઓપન")} onChange={handleChange} />
+                                                        <label>ઓપન</label>
+                                                    </div>
+                                                    <div className="col-sm-4">
+                                                        <input type="checkbox" className="m-1" name="extra_s" value="બુ-શર્ટ" checked={isExtraSelected("બુ-શર્ટ")} onChange={handleChange} />
+                                                        <label>બુ-શર્ટ</label>
+                                                    </div>
+                                                    <div className="col-sm-4">
+                                                        <input type="checkbox" className="m-1" name="extra_s" value="ડાર્ટ" checked={isExtraSelected("ડાર્ટ")} onChange={handleChange} />
+                                                        <label>ડાર્ટ</label>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-sm-4">
+                                                        <input type="checkbox" className="m-1" name="extra_s" value="પોકેટ" checked={isExtraSelected("પોકેટ")} onChange={handleChange} />
+                                                        <label>પોકેટ</label>
+                                                    </div>
+                                                    <div className="col-sm-4">
+                                                        <input type="checkbox" className="m-1" name="extra_s" value="સ્ટેન્ડ કોલર" checked={isExtraSelected("સ્ટેન્ડ કોલર")} onChange={handleChange} />
+                                                        <label>સ્ટેન્ડ કોલર</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1">
+                                                <div className="form-group">
+                                                    <label>લંબાઈ :</label>
+                                                    <input type="text" className="form-control" name="s_length" value={val.s_length} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1">
+                                                <div className="form-group">
+                                                    <label>શોલ્ડર :</label>
+                                                    <input type="text" className="form-control" name="shoulder" value={val.shoulder} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1">
+                                                <div className="form-group">
+                                                    <label>સ્લીવ :</label>
+                                                    <input type="text" className="form-control" name="sleeve" value={val.sleeve} onChange={handleChange} />
+                                                    <input type="text" className="form-control mt-2" name="sleeve1" value={val.sleeve1} onChange={handleChange} />
+                                                    <input type="text" className="form-control mt-2" name="sleeve2" value={val.sleeve2} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1">
+                                                <div className="form-group">
+                                                    <label>છાતી :</label>
+                                                    <input type="text" className="form-control" name="chest" value={val.chest} onChange={handleChange} />
+                                                    <input type="text" className="form-control mt-2" name="chest1" value={val.chest1} onChange={handleChange} />
+                                                    <input type="text" className="form-control mt-2" name="chest2" value={val.chest2} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1">
+                                                <div className="form-group">
+                                                    <label>ફ્રન્ટ :</label>
+                                                    <input type="text" className="form-control" name="front" value={val.front} onChange={handleChange} />
+                                                    <input type="text" className="form-control mt-2" name="front1" value={val.front1} onChange={handleChange} />
+                                                    <input type="text" className="form-control mt-2" name="front2" value={val.front2} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1">
+                                                <div className="form-group">
+                                                    <label>કોલર :</label>
+                                                    <input type="text" className="form-control" name="coller" value={val.coller} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-1">
+                                                <div className="form-group">
+                                                    <label>કફ :</label>
+                                                    <input type="text" className="form-control" name="cuff" value={val.cuff} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
+
+                    <div className="card-footer">
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <button type="submit" className="btn btn-primary mr-3" onClick={handleClick}>Save</button>
+                                <ReactToPrint
+                                    trigger={() => <button className="btn btn-primary" >Get Print</button>}
+                                    content={() => ref.current}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
             <div style={{ display: 'none' }}>
@@ -542,7 +561,6 @@ export default function Measurement() {
                     <Print_measurement shirtMeasurement={shirtData} pentMeasurement={pentData} customerData={customerData} />
                 </div>
             </div>
-            {/* <Footer /> */}
         </div>
     )
 }

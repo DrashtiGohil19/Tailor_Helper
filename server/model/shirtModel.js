@@ -4,52 +4,49 @@ const shirtSchema = new mongoose.Schema({
 
     customer_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "customer", 
+        ref: "customer",
     },
     extra_s: {
         type: Array
     },
     s_length: {
-        type: String
+        type: String, default: ""
     },
     shoulder: {
-        type: String
+        type: String, default: ""
     },
     sleeve: {
-        type: String
+        type: String, default: ""
     },
     sleeve1: {
-        type: String
+        type: String, default: ""
     },
     sleeve2: {
-        type: String
+        type: String, default: ""
     },
     chest: {
-        type: String
+        type: String, default: ""
     },
     chest1: {
-        type: String
+        type: String, default: ""
     },
     chest2: {
-        type: String
+        type: String, default: ""
     },
     front: {
-        type: String
+        type: String, default: ""
     },
     front1: {
-        type: String
+        type: String, default: ""
     },
     front2: {
-        type: String
+        type: String, default: ""
     },
     coller: {
-        type: String
+        type: String, default: ""
     },
     cuff: {
-        type: String
-    },
-    shirt_qty:{
-        type:Number
+        type: String, default: ""
     }
 
 })

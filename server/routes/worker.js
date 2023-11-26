@@ -11,16 +11,16 @@ const corsOptions = {
 }
 router.use(cors(corsOptions));
 
-router.post('/addworker', addWorker)
+router.post('/addworker', checktoken, addWorker)
 router.post('/rate_worker', rate_worker)
 router.get('/rate_worker', rate_worker)
 router.get('/viewworker', checktoken, view_worker)
-router.get('/single_worker/:id', single_worker)
-router.put('/update_worker/:id', update_worker)
-router.get('/search_worker', search_worker)
-router.get('/workerprofile', workerProfile)
+router.get('/single_worker/:id', checktoken, single_worker)
+router.put('/update_worker/:id', checktoken, update_worker)
+router.get('/search_worker', checktoken, search_worker)
+router.get('/workerprofile', checktoken, workerProfile)
 
-router.post('/addwork', add_work)
-router.delete('/delete_worker/:id', delete_worker)
+router.post('/addwork', checktoken, add_work)
+router.delete('/delete_worker/:id', checktoken, delete_worker)
 
 module.exports = router;

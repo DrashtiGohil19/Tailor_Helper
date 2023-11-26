@@ -20,7 +20,11 @@ export default function AddWork({ showModel1, closeModal1, selectedId }) {
     };
 
     useEffect(() => {
-        axios.get(`/worker/single_worker/${selectedId}`)
+        axios.get(`/worker/single_worker/${selectedId}`, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
             .then(function (res) {
                 setName(res.data.data.workername)
             })
@@ -37,6 +41,10 @@ export default function AddWork({ showModel1, closeModal1, selectedId }) {
             pent: val.pent,
             kurta: val.kurta,
             withdrawal: val.withdrawal,
+        }, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
         })
             .then(function (response) {
                 closeModal1()

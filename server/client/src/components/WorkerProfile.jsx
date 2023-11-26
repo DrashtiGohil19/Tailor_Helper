@@ -22,7 +22,11 @@ export default function WorkerProfile() {
         const month = selectedMonth || new Date().getMonth() + 1;
         const year = selectedYear || new Date().getFullYear();
 
-        axios.get(`/worker/workerprofile?data_id=${params.id}&selectedMonth=${month}&selectedYear=${year}`)
+        axios.get(`/worker/workerprofile?data_id=${params.id}&selectedMonth=${month}&selectedYear=${year}`, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
             .then(function (res) {
                 setval(res.data.data);
             })
@@ -31,7 +35,11 @@ export default function WorkerProfile() {
     }
 
     const single_worker = () => {
-        axios.get(`/worker/single_worker/${params.id}`)
+        axios.get(`/worker/single_worker/${params.id}`, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
             .then(function (res) {
                 setName(res.data.data.workername);
             })
