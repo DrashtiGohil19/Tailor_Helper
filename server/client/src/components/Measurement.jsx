@@ -77,7 +77,7 @@ export default function Measurement() {
     };
 
     const getData = () => {
-        axios.get(`http://localhost:5000/measurement/view_measurement?customer_id=${params.id}`, {
+        axios.get(`/measurement/view_measurement?customer_id=${params.id}`, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
@@ -144,7 +144,7 @@ export default function Measurement() {
 
         if (isPantDetailsFilled() || isShirtDetailsFilled()) {
             if (!dataExists) {
-                axios.post(`http://localhost:5000/measurement/add_measurement/${params.id}`, {
+                axios.post(`/measurement/add_measurement/${params.id}`, {
                     // ---- pent data ----
                     extra_p: val.extra_p,
                     weist: val.weist,

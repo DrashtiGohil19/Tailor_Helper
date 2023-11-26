@@ -9,7 +9,7 @@ function CustomerProfile() {
     const [name, setName] = useState()
     const params = useParams()
     useEffect(() => {
-        axios.get(`http://localhost:5000/customer/customerprofile/${params.id}`, {
+        axios.get(`/customer/customerprofile/${params.id}`, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }

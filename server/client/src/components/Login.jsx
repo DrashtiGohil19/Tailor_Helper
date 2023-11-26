@@ -10,9 +10,8 @@ export default function Login() {
         password: ""
     })
     const navigate = useNavigate()
-    console.log(localStorage.getItem("token"));
     const handleLogin = () => {
-        axios.post('http://localhost:5000/login', {
+        axios.post('/login', {
             email: val.email,
             password: val.password
         })
