@@ -46,26 +46,30 @@ const BillPage = React.forwardRef(({ data, pentData, shirtData, kurtaData, custo
                                     <div className="row">
                                         <div className="col-sm-7">
                                             <table>
-                                                <tr>
-                                                    <td>Name :</td>
-                                                    <td style={{ textTransform: 'capitalize' }}>{customerData.customername}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Mobile :</td>
-                                                    <td>{customerData.mobilenu}</td>
-                                                </tr>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Name :</td>
+                                                        <td style={{ textTransform: 'capitalize' }}>{customerData.customername}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mobile :</td>
+                                                        <td>{customerData.mobilenu}</td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                         <div className="col-sm-5">
                                             <table>
-                                                <tr>
-                                                    <td>Bill No :</td>
-                                                    <td>{customerData.bill_nu}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Date :</td>
-                                                    <td>{new Date(customerData.bill_date).toLocaleDateString('en-GB')}</td>
-                                                </tr>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Bill No :</td>
+                                                        <td>{customerData.bill_nu}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Date :</td>
+                                                        <td>{new Date(customerData.bill_date).toLocaleDateString('en-GB')}</td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -127,14 +131,16 @@ const BillPage = React.forwardRef(({ data, pentData, shirtData, kurtaData, custo
                                         </div>
                                         <div className="col-sm-5">
                                             <table className="table">
-                                                <tr>
-                                                    <th className="p-1">Paid Amt :</th>
-                                                    <td className="p-1">{data.paid_amt}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th className="p-1">Total Due Amt :</th>
-                                                    <td className="p-1">{data.final_amt}</td>
-                                                </tr>
+                                                <tbody>
+                                                    <tr>
+                                                        <th className="p-1">Paid Amt :</th>
+                                                        <td className="p-1">{data.paid_amt}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th className="p-1">Total Due Amt :</th>
+                                                        <td className="p-1">{data.final_amt}</td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>

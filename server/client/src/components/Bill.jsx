@@ -347,7 +347,7 @@ function Bill() {
                     <div className="col-sm-4">
                       <div className="form-group">
                         <label>Total Amount</label>
-                        <input type="text" className="form-control" value={totalAmount || 0} />
+                        <input type="text" className="form-control" defaultValue={totalAmount || 0} />
                       </div>
                     </div>
                     <div className="col-sm-4">
@@ -359,7 +359,7 @@ function Bill() {
                     <div className="col-sm-4">
                       <div className="form-group">
                         <label>Final Amount</label>
-                        <input type="text" className="form-control" value={finalAmount || 0} />
+                        <input type="text" className="form-control" defaultValue={finalAmount || 0} />
                       </div>
                     </div>
                   </div>
@@ -367,7 +367,7 @@ function Bill() {
               </div>
 
               <div className="m-2">
-                <button className="btn btn-primary mr-3" type="submit" >Save</button>
+                <button className="btn btn-primary mr-3" type="submit">Save</button>
                 <ReactToPrint
                   trigger={() => <button className="btn btn-primary">Get Print</button>}
                   content={() => ref.current}

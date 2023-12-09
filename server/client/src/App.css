@@ -1,3 +1,11 @@
+/* .content-wrapper {
+  height: 100vh !important;
+} */
+
+body {
+  background-color: #f4f6f9;
+}
+
 .table-responsive {
   overflow-x: auto;
 }
@@ -29,6 +37,6 @@
 
 @media (max-width: 767px) {
   td input[type="text"] {
-    width: 100% !important  
+    width: 100% !important
   }
 }
