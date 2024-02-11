@@ -36,6 +36,9 @@ const pentSchema = new mongoose.Schema({
     },
     bottom: {
         type: String, default: ""
+    },
+    p_note: {
+        type: String, default: ""
     }
 })
 

@@ -3,14 +3,11 @@ import Topbar from './Topbar'
 import React, { useState, useEffect } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { RiShirtLine } from "react-icons/ri"
 import { GoAlertFill } from "react-icons/go"
 import { AiFillCheckSquare } from "react-icons/ai"
 import '../App.css'
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { BsFillCheckCircleFill } from "react-icons/bs";
-import Footer from './Footer';
 
 export default function Dashboard() {
 
@@ -46,7 +43,7 @@ export default function Dashboard() {
         sortDeliveryData()
         deliveryAlert()
         document.title = "Simplex Tailor - Dashboard"
-    }, [alert])
+    }, [])
 
     const handleChange = (e, id) => {
         const statusValue = e.target.value
@@ -67,6 +64,7 @@ export default function Dashboard() {
             .then((response) => {
                 if (response.data.status === 'success') {
                     setPending((prevVal) => prevVal.filter(item => item._id !== id));
+                    deliveryAlert()
                     toast.success(successMSG, {
                         autoClose: 4000,
                         style: {
@@ -97,7 +95,6 @@ export default function Dashboard() {
                         defaultActiveKey="delivery alert"
                         transition={true}
                         className="mb-3"
-                        justify
                     >
                         {/* ------------------ delivery alert tab ------------------------- */}
 
@@ -185,8 +182,8 @@ export default function Dashboard() {
                                                                 <tr key={index}>
                                                                     <td style={{ textTransform: 'capitalize' }}>{item.customer_id.customername}</td>
                                                                     <td>{item.customer_id.bill_nu}</td>
-                                                                    <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
                                                                     <td>{new Date(item.booking_date).toLocaleDateString('en-GB')}</td>
+                                                                    <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
                                                                     <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
                                                                     <td>
                                                                         <select onChange={(e) => handleChange(e, item._id)}>
@@ -235,8 +232,8 @@ export default function Dashboard() {
                                                                         <tr key={index}>
                                                                             <td style={{ textTransform: 'capitalize' }}>{item.customer_id.customername}</td>
                                                                             <td>{item.customer_id.bill_nu}</td>
-                                                                            <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
                                                                             <td>{new Date(item.booking_date).toLocaleDateString('en-GB')}</td>
+                                                                            <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
                                                                             <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
                                                                             <td>
                                                                                 <select onChange={(e) => handleChange(e, item._id)}>

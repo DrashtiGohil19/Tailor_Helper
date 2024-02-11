@@ -47,6 +47,9 @@ const shirtSchema = new mongoose.Schema({
     },
     cuff: {
         type: String, default: ""
+    },
+    s_note: {
+        type: String, defualt: ""
     }
 
 })

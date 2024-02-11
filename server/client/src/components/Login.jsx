@@ -28,7 +28,6 @@ export default function Login() {
                 password: val.password,
             })
             .then(function (response) {
-                console.log(response);
                 if (response.data.status === 'Success') {
                     localStorage.setItem('token', response.data.token);
                     navigate('/dashboard');

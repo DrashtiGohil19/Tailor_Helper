@@ -11,6 +11,10 @@ const customerSchema = new mongoose.Schema({
     bill_nu: {
         type: Number,
     },
+    register_nu: {
+        type: Number,
+        default: 0
+    },
     pent_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "pent_measurement",

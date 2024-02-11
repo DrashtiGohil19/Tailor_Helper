@@ -9,7 +9,7 @@ const shirtModel = require('../model/shirtModel');
 exports.addCustomer = async (req, res) => {
     try {
         const latestBill = await customerModel.findOne({}, {}, { sort: { 'bill_nu': -1 } });
-        let newBillNumber = 0;
+        let newBillNumber = 1;
 
         if (latestBill) {
             newBillNumber = latestBill.bill_nu + 1;

@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import BillPage from "./BillPage";
 import ReactToPrint from "react-to-print";
-import { Form } from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 
 function Bill() {
 
@@ -211,13 +211,13 @@ function Bill() {
                   <div className="card">
                     <div className="card-body">
                       <div className="row">
-                        <div className="col-sm-4">
+                        <Col sm={4} xs={6} md={4}>
                           <div className="form-group">
                             <label>Name</label>
                             <input type="text" className="form-control" readOnly value={value.customername} onChange={handleChange} />
                           </div>
-                        </div>
-                        <div className="col-sm-4">
+                        </Col>
+                        <Col sm={4} xs={6} md={4}>
                           <div className="form-group">
                             <label>Mobile Number</label>
                             <input type="number" className={`form-control ${validationErrors.mobilenu ? 'is-invalid' : ''}`}
@@ -226,17 +226,15 @@ function Bill() {
                               <p className="invalid-feedback">{validationErrors.mobilenu}</p>
                             )}
                           </div>
-                        </div>
+                        </Col>
 
-                        <div className="col-sm-4">
+                        <Col sm={4} xs={6} md={4}>
                           <div className="form-group">
                             <label>Bill No</label>
                             <input type="number" className="form-control" readOnly value={value.bill_nu} onChange={handleChange} />
                           </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-4">
+                        </Col>
+                        <Col sm={4} xs={6} md={4}>
                           <div className="form-group">
                             <label>Booking Date</label>
                             <input type="date" className={`form-control ${validationErrors.booking_date ? 'is-invalid' : ''}`}
@@ -245,9 +243,9 @@ function Bill() {
                               <p className="invalid-feedback">{validationErrors.booking_date}</p>
                             )}
                           </div>
-                        </div>
+                        </Col>
 
-                        <div className="col-sm-4">
+                        <Col sm={4} xs={6} md={4}>
                           <div className="form-group">
                             <label>Delivery Date</label>
                             <input type="date" className={`form-control ${validationErrors.delivery_date ? 'is-invalid' : ''}`}
@@ -256,9 +254,9 @@ function Bill() {
                               <div className="invalid-feedback">{validationErrors.delivery_date}</div>
                             )}
                           </div>
-                        </div>
+                        </Col>
 
-                        <div className="col-sm-4">
+                        <Col sm={4} xs={6} md={4}>
                           <div className="form-group">
                             <label>Bill Date</label>
                             <input type="date" className={`form-control ${validationErrors.bill_date ? 'is-invalid' : ''}`}
@@ -267,7 +265,7 @@ function Bill() {
                               <div className="invalid-feedback">{validationErrors.bill_date}</div>
                             )}
                           </div>
-                        </div>
+                        </Col>
                       </div>
                     </div>
                   </div>
@@ -326,14 +324,12 @@ function Bill() {
                             <td>{val.kurta_rate}</td>
                             <td>{kurtaAmount || 0}</td>
                           </tr>
-                          <tr>
+                          {/* <tr>
                             <th colSpan={4}>Total Amount</th>
                             <td>
                               {totalAmount || 0}
                             </td>
-                          </tr>
-                          <tr>
-                          </tr>
+                          </tr> */}
                         </tbody>
                       </table>
                     </div>
@@ -344,24 +340,24 @@ function Bill() {
               <div className="card">
                 <div className="card-body">
                   <div className="row">
-                    <div className="col-sm-4">
+                    <Col sm={4} xs={4} md={2}>
                       <div className="form-group">
                         <label>Total Amount</label>
-                        <input type="text" className="form-control" defaultValue={totalAmount || 0} />
+                        <input type="text" className="form-control" value={totalAmount === 0 ? 0 : totalAmount} />
                       </div>
-                    </div>
-                    <div className="col-sm-4">
+                    </Col>
+                    <Col sm={4} xs={4} md={2}>
                       <div className="form-group">
                         <label>Paid Amount</label>
                         <input type="number" className="form-control" name="paid_amt" value={value.paid_amt} onChange={handleChange} />
                       </div>
-                    </div>
-                    <div className="col-sm-4">
+                    </Col>
+                    <Col sm={4} xs={4} md={2}>
                       <div className="form-group">
                         <label>Final Amount</label>
-                        <input type="text" className="form-control" defaultValue={finalAmount || 0} />
+                        <input type="text" className="form-control" value={finalAmount || 0} />
                       </div>
-                    </div>
+                    </Col>
                   </div>
                 </div>
               </div>
