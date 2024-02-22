@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
 
 const workerSchema = new mongoose.Schema({
 
@@ -11,6 +10,9 @@ const workerSchema = new mongoose.Schema({
         type: String,
         unique: true,
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId
+    }
 })
 
 const workerModel = mongoose.model('worker', workerSchema)

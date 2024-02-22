@@ -8,6 +8,8 @@ import { AiFillCheckSquare } from "react-icons/ai"
 import '../App.css'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { userId } from './LocalItem';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
 
@@ -15,10 +17,11 @@ export default function Dashboard() {
     const [complete, setComplete] = useState()
     const [deliver, setDeliver] = useState()
     const [alert, setAlert] = useState()
+    const navigate = useNavigate()
     const token = localStorage.getItem("token");
 
     const sortDeliveryData = () => {
-        axios.get('/bill/order', {
+        axios.get('/bill/order?userId=' + userId, {
             headers: {
                 'Authorization': token
             }
@@ -30,7 +33,7 @@ export default function Dashboard() {
             })
     }
     const deliveryAlert = () => {
-        axios.get('/bill/delivery_alert', {
+        axios.get('/bill/delivery_alert?userId=' + userId, {
             headers: {
                 'Authorization': token
             }
@@ -39,12 +42,35 @@ export default function Dashboard() {
                 setAlert(response.data.deliveryData)
             })
     }
-    useEffect(() => {
-        sortDeliveryData()
-        deliveryAlert()
-        document.title = "Simplex Tailor - Dashboard"
-    }, [])
+    const checkIsLoggedIn = () => {
+        axios.get("/userdata?id=" + userId)
+            .then((response) => {
+                let isLoggedIn = response.data.user.isLoggedIn
+                if (!isLoggedIn) {
+                    localStorage.clear()
+                    navigate("/")
+                }
+            })
+    }
 
+    useEffect(() => {
+        const storedUserId = localStorage.getItem("userId");
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+        if (storedUserId === null || isLoggedIn === null) {
+            localStorage.clear();
+            navigate("/");
+        } else {
+            sortDeliveryData();
+            deliveryAlert();
+            checkIsLoggedIn()
+            document.title = "Simplex Tailor - Dashboard";
+        }
+    }, [navigate]);
+
+    // useEffect(() => {
+    //     checkIsLoggedIn()
+    // }, [])
     const handleChange = (e, id) => {
         const statusValue = e.target.value
         let successMSG = ''
@@ -65,6 +91,7 @@ export default function Dashboard() {
                 if (response.data.status === 'success') {
                     setPending((prevVal) => prevVal.filter(item => item._id !== id));
                     deliveryAlert()
+                    sortDeliveryData()
                     toast.success(successMSG, {
                         autoClose: 4000,
                         style: {
@@ -126,6 +153,12 @@ export default function Dashboard() {
                                                             const today = new Date().toLocaleDateString('en-GB')
                                                             const deliveryDate = new Date(item.delivery_date).toLocaleDateString('en-GB');
                                                             const isRowRed = deliveryDate < today;
+
+                                                            const shirtQty = item.shirt?.shirt_qty || 0;
+                                                            const pentQty = item.pent?.pent_qty || 0;
+                                                            const kurtaQty = item.kurta?.kurta_qty || 0;
+
+                                                            const totalQty = shirtQty + pentQty + kurtaQty;
                                                             return (
                                                                 <tr key={index} style={{ color: isRowRed ? '#d00000' : '', fontWeight: isRowRed ? '500' : '' }}>
                                                                     {
@@ -138,7 +171,7 @@ export default function Dashboard() {
                                                                     <td>{item.shirt_qty}</td>
                                                                     <td>{item.pent_qty}</td>
                                                                     <td>{item.kurta_qty}</td>
-                                                                    <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
+                                                                    <td>{totalQty}</td>
                                                                     <td style={{ color: item.status === 0 ? '#ff8800' : item.status === 1 ? 'green' : '', fontSize: 20, padding: 5 }}>
                                                                         {item.status === 0 ? <GoAlertFill /> : <AiFillCheckSquare />}
                                                                     </td>
@@ -160,8 +193,6 @@ export default function Dashboard() {
                         <Tab eventKey="pending order" title="Pending Order">
                             <section className="content">
                                 <div className="container-fluid">
-                                    {/* <div className="row">
-                                        <div className="col-12"> */}
                                     <div className="card">
                                         <div className="card-body table-responsive">
                                             <table className="table table-bordered table-hover text-center responsive" >
@@ -178,13 +209,18 @@ export default function Dashboard() {
                                                 <tbody>
                                                     {
                                                         pending?.map((item, index) => {
+                                                            const shirtQty = item.shirt?.shirt_qty || 0;
+                                                            const pentQty = item.pent?.pent_qty || 0;
+                                                            const kurtaQty = item.kurta?.kurta_qty || 0;
+
+                                                            const totalQty = shirtQty + pentQty + kurtaQty;
                                                             return (
                                                                 <tr key={index}>
                                                                     <td style={{ textTransform: 'capitalize' }}>{item.customer_id.customername}</td>
                                                                     <td>{item.customer_id.bill_nu}</td>
                                                                     <td>{new Date(item.booking_date).toLocaleDateString('en-GB')}</td>
                                                                     <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
-                                                                    <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
+                                                                    <td>{totalQty}</td>
                                                                     <td>
                                                                         <select onChange={(e) => handleChange(e, item._id)}>
                                                                             <option value={0}>Pending</option>
@@ -228,13 +264,18 @@ export default function Dashboard() {
                                                         <tbody>
                                                             {
                                                                 complete?.map((item, index) => {
+                                                                    const shirtQty = item.shirt?.shirt_qty || 0;
+                                                                    const pentQty = item.pent?.pent_qty || 0;
+                                                                    const kurtaQty = item.kurta?.kurta_qty || 0;
+
+                                                                    const totalQty = shirtQty + pentQty + kurtaQty;
                                                                     return (
                                                                         <tr key={index}>
                                                                             <td style={{ textTransform: 'capitalize' }}>{item.customer_id.customername}</td>
                                                                             <td>{item.customer_id.bill_nu}</td>
                                                                             <td>{new Date(item.booking_date).toLocaleDateString('en-GB')}</td>
                                                                             <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
-                                                                            <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
+                                                                            <td>{totalQty}</td>
                                                                             <td>
                                                                                 <select onChange={(e) => handleChange(e, item._id)}>
                                                                                     <option value={1}>Complete</option>
@@ -277,13 +318,18 @@ export default function Dashboard() {
                                                         <tbody>
                                                             {
                                                                 deliver?.map((item, index) => {
+                                                                    const shirtQty = item.shirt?.shirt_qty || 0;
+                                                                    const pentQty = item.pent?.pent_qty || 0;
+                                                                    const kurtaQty = item.kurta?.kurta_qty || 0;
+
+                                                                    const totalQty = shirtQty + pentQty + kurtaQty;
                                                                     return (
                                                                         <tr key={index}>
                                                                             <td style={{ textTransform: 'capitalize' }}>{item.customer_id.customername}</td>
                                                                             <td>{item.customer_id.bill_nu}</td>
                                                                             <td>{new Date(item.delivery_date).toLocaleDateString('en-GB')}</td>
                                                                             <td>{item.actual_delivery_date ? new Date(item.actual_delivery_date).toLocaleDateString('en-GB') : "-"}</td>
-                                                                            <td>{item.shirt_qty + item.pent_qty + item.kurta_qty}</td>
+                                                                            <td>{totalQty}</td>
                                                                             <td style={{ padding: 7 }}>
                                                                                 <AiFillCheckSquare style={{ color: 'green', fontSize: 20 }} />
                                                                             </td>

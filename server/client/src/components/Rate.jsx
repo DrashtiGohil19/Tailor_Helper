@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Button, Col, Row } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-
+import { userId } from "./LocalItem";
 
 export default function Rate({ rateModel, closeModel, isCustomerRate }) {
     const [val, setVal] = useState({
@@ -26,20 +26,20 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
         axios.post(apiEndpoint, {
             shirt_rate: val.shirt_rate,
             pent_rate: val.pent_rate,
-            kurta_rate: val.kurta_rate
+            kurta_rate: val.kurta_rate,
+            userId: userId
         })
             .then(function (res) {
                 setVal(res.data)
-                if (res.status === 200) {
-                    closeModel()
-                    toast.success("Rate Saved Succesfully !", {
-                        autoClose: 4000,
-                        style: {
-                            backgroundColor: 'black',
-                            color: 'white',
-                        },
-                    });
-                }
+                console.log(res.data);
+                closeModel()
+                toast.success("Rate Saved Succesfully !", {
+                    autoClose: 4000,
+                    style: {
+                        backgroundColor: 'black',
+                        color: 'white',
+                    },
+                });
             })
             .catch(function (error) {
                 toast.error("Failed to saved rate !", {
@@ -53,9 +53,12 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
     }
 
     useEffect(() => {
-        axios.get(apiEndpoint)
+        axios.get(apiEndpoint + "?userId=" + userId)
             .then(function (res) {
-                setVal(res.data);
+                console.log(res.data);
+                if (res.data.result !== null) {
+                    setVal(res.data.result);
+                }
             })
             .catch(function (error) {
             });

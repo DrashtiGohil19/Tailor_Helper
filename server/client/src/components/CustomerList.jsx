@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import { Pagination, Stack } from "@mui/material";
@@ -9,8 +9,11 @@ import { FaHistory, FaRupeeSign } from "react-icons/fa"
 import DeleteData from "./DeleteData";
 import EditWorker from "./EditWorker";
 import AddPerson from "./AddPerson";
-import Footer from "./Footer";
 import Rate from "./Rate";
+import { Col } from "react-bootstrap";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import { userId } from "./LocalItem";
 
 export default function CustomerList() {
   const [view, setview] = useState();
@@ -24,8 +27,7 @@ export default function CustomerList() {
   const [selectedId, setSelectedId] = useState(null)
   const [editModel, setEditModel] = useState(false)
   const [rateModel, setRateModel] = useState(false)
-  const token = localStorage.getItem("token")
-
+  const navigate = useNavigate()
   const showModel = () => {
     setModelOpen(true)
   }
@@ -69,12 +71,56 @@ export default function CustomerList() {
   }
 
   useEffect(() => {
-    viewdata();
-    searchCustomer();
-    document.title = "Simplex Tailor - Customer List"
-  }, [currentPage]);
+    const storedUserId = localStorage.getItem("userId");
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (storedUserId === null || isLoggedIn === null) {
+      localStorage.clear();
+      navigate("/");
+    } else {
+      if (searchQuery === "") {
+        viewdata();
+      }
+      checkIsLoggedIn()
+      document.title = "Simplex Tailor - Customer List"
+    }
+  }, [currentPage, searchQuery, navigate]);
+
+
+  useEffect(() => {
+
+  }, [])
+
+  /**
+   * useEffect(() => {
+        const storedUserId = localStorage.getItem("userId");
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+        if (storedUserId === null || isLoggedIn === null) {
+            localStorage.clear();
+            navigate("/");
+        } else {
+            sortDeliveryData();
+            deliveryAlert();
+            checkIsLoggedIn()
+            document.title = "Simplex Tailor - Dashboard";
+        }
+    }, [navigate]);
+   */
+
+  const checkIsLoggedIn = () => {
+    axios.get("/userdata?id=" + userId)
+      .then((response) => {
+        console.log(response.data.user.isLoggedIn);
+        let isLoggedIn = response.data.user.isLoggedIn
+        if (!isLoggedIn) {
+          localStorage.clear()
+          navigate("/")
+        }
+      })
+  }
+
   const viewdata = () => {
-    axios.get(`/customer/view_customer?page_no=${currentPage}`, {
+    axios.get(`/customer/view_customer?page_no=${currentPage}&userId=${userId}`, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }
@@ -85,18 +131,25 @@ export default function CustomerList() {
       })
   }
 
-  const searchCustomer = (e) => {
-    const query = e?.target?.value || "";
-    setSearchQuery(query);
-
-    axios.get(`/customer/search_customer?page_no=${currentPage}&search=${query}`, {
-      headers: {
-        'Authorization': localStorage.getItem('token')
+  const searchCustomer = (event) => {
+    if (event === "mobileNumber" || event === "billNumber") {
+      const params = {
+        [event]: searchQuery,
+        userId: userId
       }
-    })
-      .then(function (res) {
-        setview(res.data.data);
+
+      axios({
+        method: "GET",
+        url: "/customer/search_customer",
+        params: params,
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
       })
+        .then(function (res) {
+          setview(res.data.data);
+        })
+    }
   }
   return (
     <div>
@@ -131,21 +184,27 @@ export default function CustomerList() {
             <div className="row">
               <div className="col-12">
                 <div className="card">
-                  <div className="card-header d-flex">
-                    <h3 className="card-title">View all customer</h3>
-                    <div className='d-flex ml-auto'>
-                      <span>Search:</span>
-                      <input type="text" className='form-control form-control-sm ml-2' name='search' value={searchQuery} onChange={searchCustomer} />
+                  <div className="card-header">
+                    <div className='row'>
+                      <Col xs={6} sm={4}>
+                        <input type="number" className='form-control' placeholder="Search..." name='search' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                      </Col>
+                      <Col xs={6} sm={3}>
+                        <DropdownButton title="Search With" onSelect={searchCustomer}>
+                          <Dropdown.Item eventKey={"mobileNumber"}>Mobile Number</Dropdown.Item>
+                          <Dropdown.Item eventKey={"billNumber"}>Bill Number</Dropdown.Item>
+                        </DropdownButton>
+                      </Col>
                     </div>
                   </div>
                   <div className="card-body table-responsive">
                     <table className="table table-bordered table-hover text-center responsive">
                       <thead>
                         <tr>
-                          <th>Number</th>
+                          {/* <th>Number</th> */}
+                          <th>Bill Nu.</th>
                           <th>Name</th>
                           <th>Mobile Number</th>
-                          <th>Bill Nu.</th>
                           <th>Measurement</th>
                           <th>History</th>
                           <th colSpan={2}>Action</th>
@@ -155,10 +214,10 @@ export default function CustomerList() {
                         {
                           view?.map((value, index) => (
                             <tr key={index}>
-                              <td> {startIndex + index + 1}</td>
+                              {/* <td> {startIndex + index + 1}</td> */}
+                              <td>{value.bill_nu}</td>
                               <td style={{ textTransform: 'capitalize' }}>{value.customername}</td>
                               <td>{value.mobilenu}</td>
-                              <td>{value.bill_nu}</td>
                               <td><Link to={`/add_measurement/${value._id}`}><MdLibraryAdd style={{ fontSize: "18px" }} /></Link></td>
                               <td><Link to={`/customer_profile/${value._id}`}><FaHistory /></Link></td>
                               <td onClick={() => showEdit(value._id)}><i className='fas fa-edit'></i></td>

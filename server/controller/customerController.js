@@ -8,7 +8,8 @@ const shirtModel = require('../model/shirtModel');
 
 exports.addCustomer = async (req, res) => {
     try {
-        const latestBill = await customerModel.findOne({}, {}, { sort: { 'bill_nu': -1 } });
+        const userId = req.body.userId
+        const latestBill = await customerModel.findOne({ userId: userId }, {}, { sort: { 'bill_nu': -1 } });
         let newBillNumber = 1;
 
         if (latestBill) {
@@ -18,8 +19,8 @@ exports.addCustomer = async (req, res) => {
             customername: req.body.name,
             mobilenu: req.body.mobilenu,
             bill_nu: newBillNumber,
+            userId: req.body.userId
         };
-
         var data = await customerModel.create(newCustomer);
         res.status(200).json({
             status: "success",
@@ -43,8 +44,9 @@ exports.view_customer = async (req, res) => {
             page_no = 1;
         }
         var start = (page_no - 1) * limit;
-        var data = await customerModel.find().skip(start).limit(limit);
-        var total_record = await customerModel.find().count();
+        const userId = req.query.userId
+        var data = await customerModel.find({ userId: userId }).skip(start).limit(limit);
+        var total_record = await customerModel.find({ userId: userId }).count();
         var totalpage = Math.ceil(total_record / 10)
         res.status(200).json({
             status: "success",
@@ -63,15 +65,18 @@ exports.view_customer = async (req, res) => {
 
 exports.search_customer = async (req, res) => {
     try {
-        var limit = 10;
-        var page_no = req.query.page_no;
-        if (page_no == undefined) {
-            page_no = 1;
+        const { mobileNumber, billNumber, userId } = req.query;
+        if (!mobileNumber && !billNumber) {
+            return res.status(400).json({ error: 'Provide at least one search parameter.' });
         }
-        var start = (page_no - 1) * limit;
-        var search = req.query.search;
-        const regex = new RegExp(search, 'i');
-        var data = await customerModel.find({ mobilenu: regex }).skip(start).limit(limit);
+        let query = { userId };
+        if (mobileNumber) {
+            query.mobilenu = mobileNumber;
+        }
+        if (billNumber) {
+            query.bill_nu = billNumber;
+        }
+        const data = await customerModel.find(query)
         res.status(200).json({
             status: "success",
             data
@@ -165,9 +170,13 @@ exports.customerProfile = async (req, res) => {
 
 exports.rate_customer = async (req, res) => {
     try {
-        const existingRate = await rateCustomerModel.findOne();
+        const { userId } = req.body;
+
+        const existingRate = await rateCustomerModel.findOne({ userId });
+
         if (!existingRate) {
-            const newRate = await rateCustomerModel.create(req.body)
+            const newRate = await rateCustomerModel.create(req.body);
+
             res.status(201).json({
                 status: "success",
                 newRate
@@ -175,8 +184,28 @@ exports.rate_customer = async (req, res) => {
         } else {
             existingRate.set(req.body);
             await existingRate.save();
-            res.status(200).json(existingRate);
+
+            res.status(200).json({
+                status: "success",
+                existingRate
+            });
         }
+    } catch (error) {
+        res.status(500).json({
+            status: "failed",
+            error
+        });
+    }
+};
+
+exports.getRateCustomer = async (req, res) => {
+    try {
+        const userId = req.query.userId
+        const result = await rateCustomerModel.findOne({ userId: userId })
+        res.status(200).json({
+            status: "success",
+            result
+        });
     } catch (error) {
         res.status(500).json({
             status: "failed",

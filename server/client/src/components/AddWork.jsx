@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Modal from 'react-bootstrap/Modal';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { toast } from "react-toastify";
+import { token } from "./LocalItem";
 
 export default function AddWork({ showModel1, closeModal1, selectedId }) {
     let [val, setval] = useState({
@@ -22,7 +23,7 @@ export default function AddWork({ showModel1, closeModal1, selectedId }) {
     useEffect(() => {
         axios.get(`/worker/single_worker/${selectedId}`, {
             headers: {
-                'Authorization': localStorage.getItem('token')
+                'Authorization': token
             }
         })
             .then(function (res) {
@@ -43,7 +44,7 @@ export default function AddWork({ showModel1, closeModal1, selectedId }) {
             withdrawal: val.withdrawal,
         }, {
             headers: {
-                'Authorization': localStorage.getItem('token')
+                'Authorization': token
             }
         })
             .then(function (response) {

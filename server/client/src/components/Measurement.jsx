@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import ReactToPrint from "react-to-print";
 import Print_measurement from "./Print_measurement";
 import { Col } from "react-bootstrap";
+import { token } from "./LocalItem";
 
 export default function Measurement() {
 
@@ -18,7 +19,7 @@ export default function Measurement() {
         pent_qty: "",
         shirt_qty: "",
         bill_nu: "",
-        register_nu: 0,
+        register_nu: "",
 
         extra_p: [],
         weist: "",
@@ -82,7 +83,7 @@ export default function Measurement() {
     const getData = () => {
         axios.get(`/measurement/view_measurement?customer_id=${params.id}`, {
             headers: {
-                'Authorization': localStorage.getItem('token')
+                'Authorization': token
             }
         })
             .then(function (response) {
@@ -184,7 +185,7 @@ export default function Measurement() {
                     s_note: val.s_note
                 }, {
                     headers: {
-                        'Authorization': localStorage.getItem('token')
+                        'Authorization': token
                     }
                 })
                     .then(function (res) {
@@ -240,7 +241,7 @@ export default function Measurement() {
                     s_note: val.s_note
                 }, {
                     headers: {
-                        'Authorization': localStorage.getItem('token')
+                        'Authorization': token
                     }
                 })
                     .then(function (res) {
@@ -362,7 +363,7 @@ export default function Measurement() {
                                             </Col>
                                             <Col className="col-md-3 col-sm-3" xs={6}>
                                                 <div className="form-group">
-                                                    <label>Register Nu.</label>
+                                                    <label>Book Nu.</label>
                                                     <input type="number" className="form-control" name="register_nu" value={val.register_nu} onChange={handleChange} />
                                                 </div>
                                             </Col>
@@ -407,13 +408,13 @@ export default function Measurement() {
                                                 <label>સિંગલ ચીપટી</label>
                                             </Col>
                                             <Col md={3} xs={6} sm={3} lg={3} xl={2}>
+                                                <input type="checkbox" className="m-1" name="extra_p" value="નો ચીપટી" checked={isExtraSelected("નો ચીપટી")} onChange={handleChange} />
+                                                <label>નો ચીપટી</label>
+                                            </Col>
+                                            <Col md={3} xs={6} sm={3} lg={3} xl={2}>
                                                 <input type="checkbox" className="m-1" name="extra_p" value="બોક્સ ચીપટી" checked={isExtraSelected("બોક્સ ચીપટી")} onChange={handleChange} />
                                                 <label>બોક્સ ચીપટી</label>
                                             </Col>
-                                            {/* <Col md={3} xs={6} sm={3} lg={3} xl={2}>
-                                                <input type="checkbox" className="m-1" name="extra_p" value="પાછળ પોકેટ" checked={isExtraSelected("પાછળ પોકેટ")} onChange={handleChange} />
-                                                <label>પાછળ પોકેટ</label>
-                                            </Col> */}
                                             <Col md={3} xs={6} sm={3} lg={3} xl={2}>
                                                 <input type="checkbox" className="m-1" name="extra_p" value="સિંગલ પોકેટ" checked={isExtraSelected("સિંગલ પોકેટ")} onChange={handleChange} />
                                                 <label>સિંગલ પોકેટ</label>
@@ -421,6 +422,10 @@ export default function Measurement() {
                                             <Col md={3} xs={6} sm={3} lg={3} xl={2}>
                                                 <input type="checkbox" className="m-1" name="extra_p" value="ડબલ પોકેટ" checked={isExtraSelected("ડબલ પોકેટ")} onChange={handleChange} />
                                                 <label>ડબલ પોકેટ</label>
+                                            </Col>
+                                            <Col md={3} xs={6} sm={3} lg={3} xl={2}>
+                                                <input type="checkbox" className="m-1" name="extra_p" value="નો પોકેટ" checked={isExtraSelected("નો પોકેટ")} onChange={handleChange} />
+                                                <label>નો પોકેટ</label>
                                             </Col>
                                         </div>
 
@@ -466,13 +471,13 @@ export default function Measurement() {
                                                     <input type="text" className="form-control mt-2" name="knee2" value={val.knee2} onChange={handleChange} />
                                                 </div>
                                             </Col>
-                                            <Col lg={1} md={2} sm={2} xs={4}>
+                                            <Col lg={1} md={2} sm={2} xs={4} className="order-2 order-sm-1">
                                                 <div className="form-group">
                                                     <label>બોટમ</label>
                                                     <input type="text" className="form-control" name="bottom" value={val.bottom} onChange={handleChange} />
                                                 </div>
                                             </Col>
-                                            <Col lg={4} md={4} sm={2} xs={8}>
+                                            <Col lg={4} md={4} sm={2} xs={8} className="order-1 order-sm-2">
                                                 <div className="form-group mb-0">
                                                     <label>નોંધ</label>
                                                     <textarea type="text" className="form-control" name="p_note" value={val.p_note} onChange={handleChange} />
@@ -503,8 +508,8 @@ export default function Measurement() {
                                                 <label>ડાર્ટ</label>
                                             </Col>
                                             <Col md={3} xs={6} sm={3} lg={3} xl={2}>
-                                                <input type="checkbox" className="m-1" name="extra_s" value="પોકેટ" checked={isExtraSelected("પોકેટ")} onChange={handleChange} />
-                                                <label>પોકેટ</label>
+                                                <input type="checkbox" className="m-1" name="extra_s" value="નો પોકેટ" checked={isExtraSelected("નો પોકેટ")} onChange={handleChange} />
+                                                <label>નો પોકેટ</label>
                                             </Col>
                                             <Col md={3} xs={6} sm={3} lg={3} xl={2}>
                                                 <input type="checkbox" className="m-1" name="extra_s" value="સ્ટેન્ડ કોલર" checked={isExtraSelected("સ્ટેન્ડ કોલર")} onChange={handleChange} />

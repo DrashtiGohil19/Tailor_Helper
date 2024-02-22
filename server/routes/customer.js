@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { addCustomer, view_customer, search_customer, delete_customer, single_customer, update_customer, customerProfile, rate_customer } = require('../controller/customerController');
+const { addCustomer, view_customer, search_customer, delete_customer, single_customer, update_customer, customerProfile, rate_customer, getRateCustomer, addUserID } = require('../controller/customerController');
 
 const cors = require('cors');
 const { checktoken } = require('../middlewere/auth');
@@ -17,10 +17,9 @@ router.get('/search_customer', checktoken, search_customer)
 router.delete('/delete_customer/:id', checktoken, delete_customer)
 router.get('/single_customer/:id', checktoken, single_customer)
 router.put('/update_customer/:id', checktoken, update_customer)
-router.get('/customerprofile/:id',checktoken, customerProfile)
+router.get('/customerprofile/:id', checktoken, customerProfile)
 
 router.post('/ratecustomer', rate_customer)
-router.get('/ratecustomer', rate_customer)
-
+router.get('/ratecustomer', getRateCustomer)
 
 module.exports = router;

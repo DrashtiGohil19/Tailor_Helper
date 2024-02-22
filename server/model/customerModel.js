@@ -12,8 +12,8 @@ const customerSchema = new mongoose.Schema({
         type: Number,
     },
     register_nu: {
-        type: Number,
-        default: 0
+        type: String,
+        default: ""
     },
     pent_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -23,6 +23,9 @@ const customerSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "shirt_measurement",
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId
+    }
 })
 
 const customerModel = mongoose.model('customer', customerSchema)

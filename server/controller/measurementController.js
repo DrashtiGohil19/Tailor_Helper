@@ -42,29 +42,6 @@ exports.add_measurement = async (req, res) => {
     }
 };
 
-// ---- transaction data ----
-
-// exports.transaction = async (req, res) => {
-//     try {
-//         const {
-//             customer_id, pent_qty, shirt_qty, booking_date, delivery_date,
-//         } = req.body;
-//         const record_obj = {
-//             customer_id, pent_qty, shirt_qty, booking_date, delivery_date,
-//         }
-//         const record_data = await recordModel.create(record_obj)
-//         res.status(200).json({
-//             status: "success",
-//             record_data
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             status: "failed",
-//             error
-//         });
-//     }
-// }
-
 // ---- view measurement ----
 
 exports.view_measurement = async (req, res) => {
@@ -78,12 +55,6 @@ exports.view_measurement = async (req, res) => {
                 .populate('pent_id')
                 .populate('shirt_id')
                 .exec();
-            // } else if (mobilenu) {
-            //     data = await customerModel
-            //         .findOne({ mobilenu })
-            //         .populate('pent_id')
-            //         .populate('shirt_id')
-            //         .exec();
         } else {
             data = await customerModel
                 .find()

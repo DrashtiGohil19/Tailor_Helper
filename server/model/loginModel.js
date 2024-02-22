@@ -1,8 +1,11 @@
-    const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
 const loginSchema = new mongoose.Schema({
     email: { type: String },
-    password: { type: String }
+    password: { type: String },
+    role: { type: String },
+    isLoggedIn: { type: Boolean, default: true },
+    shopName: { type: String }
 })
 
 const loginModel = mongoose.model('login', loginSchema)

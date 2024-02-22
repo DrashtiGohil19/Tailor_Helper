@@ -13,6 +13,7 @@ import { FaRupeeSign } from 'react-icons/fa';
 import Rate from './Rate';
 import AddPerson from './AddPerson';
 import Footer from './Footer';
+import { token, userId } from './LocalItem';
 
 export default function AllWorker() {
   const [view, setview] = useState();
@@ -80,14 +81,13 @@ export default function AllWorker() {
 
   useEffect(() => {
     viewdata();
-    searchWorker();
     document.title = "Simplex Tailor - Worker List"
   }, [currentPage]);
 
   const viewdata = () => {
-    axios.get(`/worker/viewworker?page_no=${currentPage}`, {
+    axios.get(`/worker/viewworker?page_no=${currentPage}&userId=${userId}`, {
       headers: {
-        'Authorization': localStorage.getItem('token')
+        'Authorization': token
       }
     })
       .then(function (res) {
@@ -103,14 +103,25 @@ export default function AllWorker() {
     const query = e?.target?.value || "";
     setSearchQuery(query);
 
-    axios.get(`/worker/search_worker?page_no=${currentPage}&search=${query}`, {
-      headers: {
-        'Authorization': localStorage.getItem('token')
-      }
-    })
-      .then(function (res) {
-        setview(res.data.data);
+    if (query !== "") {
+      axios({
+        method: "GET",
+        url: "/worker/search_worker",
+        params: {
+          mobileNumber: query,
+          userId: userId
+        },
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
       })
+        .then(function (res) {
+          console.log(res.data);
+          setview(res.data.data);
+        })
+    } else {
+      viewdata()
+    }
   }
   return (
     <div>

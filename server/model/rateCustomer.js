@@ -2,9 +2,10 @@ const mongoose = require('mongoose')
 
 const rateCustomerSchema = new mongoose.Schema({
 
-    shirt_rate: { type: Number, default:0 },
-    pent_rate: { type: Number , default:0 },
-    kurta_rate: { type:Number , default:0 }
+    shirt_rate: { type: Number },
+    pent_rate: { type: Number },
+    kurta_rate: { type: Number },
+    userId: { type: mongoose.Schema.Types.ObjectId }
 
 })
 

@@ -19,7 +19,7 @@ exports.addWorker = async (req, res) => {
     }
 }
 
-// ---- add, get, update rate worker ---
+// ---- add, update rate worker ---
 
 exports.rate_worker = async (req, res) => {
     try {
@@ -43,6 +43,21 @@ exports.rate_worker = async (req, res) => {
     }
 }
 
+exports.getRateWorker = async (req, res) => {
+    try {
+        const userId = req.query.userId
+        const result = await rateWorkerModel.findOne({ userId: userId });
+        res.status(200).json({
+            status: "success",
+            result
+        })
+    } catch (error) {
+        res.status(500).json({
+            status: "failed",
+            error
+        });
+    }
+}
 // ---- view worker ----
 
 exports.view_worker = async (req, res) => {
@@ -53,7 +68,8 @@ exports.view_worker = async (req, res) => {
             page_no = 1;
         }
         var start = (page_no - 1) * limit;
-        var data = await workerModel.find().skip(start).limit(limit);
+        const userId = req.query.userId
+        var data = await workerModel.find({ userId: userId }).skip(start).limit(limit);
         var total_record = await workerModel.find().count();
         var totalpage = Math.ceil(total_record / 10)
         res.status(200).json({
@@ -159,15 +175,8 @@ exports.delete_worker = async (req, res) => {
 
 exports.search_worker = async (req, res) => {
     try {
-        var limit = 10;
-        var page_no = req.query.page_no;
-        if (page_no == undefined) {
-            page_no = 1;
-        }
-        var start = (page_no - 1) * limit;
-        var search = req.query.search;
-        const regex = new RegExp(search, 'i');
-        var data = await workerModel.find({ mobilenu: regex }).skip(start).limit(limit);
+        const { userId, mobileNumber } = req.query;
+        var data = await workerModel.find({ userId: userId, mobilenu: mobileNumber })
         res.status(200).json({
             status: "success",
             data

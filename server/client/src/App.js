@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import React, { Suspense } from 'react';
 import './App.css';
 import { Routes, Route, Navigate } from "react-router-dom";
+import Invoice from './components/Invoice';
 const AllWorker = React.lazy(() => import("./components/AllWorker"))
 const WorkerProfile = React.lazy(() => import("./components/WorkerProfile"));
 const CustomerList = React.lazy(() => import("./components/CustomerList"));
@@ -33,6 +34,7 @@ function App() {
           <Route path="/bill" element={<PrivateRoute> <Bill /> </PrivateRoute>} />
           <Route path="/customer_profile/:id" element={<PrivateRoute> <CustomerProfile /> </PrivateRoute>} />
           <Route path='/*' element={<PrivateRoute> <NotFound /> </PrivateRoute>} />
+          <Route path='/invoice' element={<PrivateRoute> <Invoice /> </PrivateRoute>} />
         </Routes>
       </Suspense>
       <ToastContainer position='top-right' />

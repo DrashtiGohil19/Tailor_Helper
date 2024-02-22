@@ -33,7 +33,8 @@ exports.update_rate = async (req, res) => {
 
 exports.get_rate = async (req, res) => {
     try {
-        var data = await rateCustomerModel.findOne()
+        const userId = req.query.userId
+        var data = await rateCustomerModel.find({ userId: userId })
         res.status(200).json({
             status: "success",
             data
@@ -67,7 +68,3 @@ module.exports.rate = async (req, res) => {
         });
     }
 }
-
-
-
-

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -29,7 +29,12 @@ export default function Login() {
             })
             .then(function (response) {
                 if (response.data.status === 'Success') {
+                    let isLoggedIn = response.data.data[0].isLoggedIn
+                    let userId = response.data.data[0]._id
                     localStorage.setItem('token', response.data.token);
+                    localStorage.setItem("userId", userId)
+                    localStorage.setItem("isLoggedIn", isLoggedIn)
+                    localStorage.setItem("shopName", response.data.data[0].shopName)
                     navigate('/dashboard');
                 } else {
                     toast.error(response.data.status, {
@@ -42,7 +47,8 @@ export default function Login() {
                 }
             })
             .catch(function (error) {
-                toast.error('Failed to login! Please try again', {
+                console.log(error);
+                toast.error(error.response.data.status, {
                     autoClose: 4000,
                     style: {
                         backgroundColor: 'black',
@@ -63,7 +69,7 @@ export default function Login() {
                     <div className="card-body login-card-body">
                         <p className="login-box-msg">Sign in to start your session</p>
                         <form method="post">
-                            <label>Email</label>
+                            <label>User Name</label>
                             <div className="input-group mb-3">
                                 <input
                                     type="email"

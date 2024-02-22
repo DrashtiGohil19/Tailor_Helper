@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { shopName } from "./LocalItem";
 export default function Sidebar() {
   return (
     <div className="wrapper">
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
         <NavLink className="brand-link" activeclassname="active-link">
           <img src="/images/cap.png" className="brand-image img-circle" style={{ opacity: '.8' }} />
-          <span className="brand-text font-weight-light"><b>SIMPLEX TAILOR</b></span>
+          <span className="brand-text font-weight-light text-uppercase"><b>{shopName}</b></span>
           <i data-widget="pushmenu" className="d-lg-none ml-2">
             <FaAngleDoubleLeft />
           </i>

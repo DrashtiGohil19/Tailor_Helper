@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import '../App.css'
 import { Button, Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { token } from './LocalItem';
 
 export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
     let [val, setval] = useState({
@@ -15,7 +16,7 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
         name: '',
         mobilenu: '',
     });
-
+    const userId = localStorage.getItem("userId")
     const handlevalue = (e) => {
         setval({ ...val, [e.target.name]: e.target.value })
         setValidationErrors({ ...validationErrors, [e.target.name]: '' });
@@ -50,12 +51,12 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
                 : "/customer/add_customer";
 
             const dataPayload = isAddingWorker
-                ? { workername: val.name, mobilenu: val.mobilenu }
-                : { name: val.name, mobilenu: val.mobilenu }
+                ? { workername: val.name, mobilenu: val.mobilenu, userId: userId }
+                : { name: val.name, mobilenu: val.mobilenu, userId: userId }
 
             axios.post(apiEndpoint, dataPayload, {
                 headers: {
-                    'Authorization': localStorage.getItem('token')
+                    'Authorization': token
                 }
             })
                 .then(function (response) {
@@ -77,8 +78,8 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
                 .catch(function (error) {
                     closeModal();
                     const errorMessage = isAddingWorker
-                        ? 'Failed to add worker!'
-                        : 'Failed to add customer!';
+                        ? 'Failed to add worker! Try with another mobile number.'
+                        : 'Failed to add customer! Try with another mobile number.';
 
                     toast.error(errorMessage, {
                         autoClose: 5000,
