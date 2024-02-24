@@ -32,10 +32,14 @@ export default function Login() {
                     let isLoggedIn = response.data.data[0].isLoggedIn
                     let userId = response.data.data[0]._id
                     localStorage.setItem('token', response.data.token);
-                    localStorage.setItem("userId", userId)
-                    localStorage.setItem("isLoggedIn", isLoggedIn)
-                    localStorage.setItem("shopName", response.data.data[0].shopName)
-                    navigate('/dashboard');
+                    if (response.data.data[0].role === "user") {
+                        localStorage.setItem("userId", userId)
+                        localStorage.setItem("isLoggedIn", isLoggedIn)
+                        localStorage.setItem("shopName", response.data.data[0].shopName)
+                        navigate('/dashboard');
+                    } else if (response.data.data[0].role === "admin") {
+                        navigate('/admin/dashboard')
+                    }
                 } else {
                     toast.error(response.data.status, {
                         autoClose: 4000,

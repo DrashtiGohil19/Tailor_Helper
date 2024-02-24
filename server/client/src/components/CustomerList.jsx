@@ -10,13 +10,14 @@ import DeleteData from "./DeleteData";
 import EditWorker from "./EditWorker";
 import AddPerson from "./AddPerson";
 import Rate from "./Rate";
-import { Col } from "react-bootstrap";
+import { Col, Placeholder } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { userId } from "./LocalItem";
+import Footer from "./Footer";
 
 export default function CustomerList() {
-  const [view, setview] = useState();
+  const [view, setview] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [totalPages, setTotalPages] = useState();
@@ -85,32 +86,9 @@ export default function CustomerList() {
     }
   }, [currentPage, searchQuery, navigate]);
 
-
-  useEffect(() => {
-
-  }, [])
-
-  /**
-   * useEffect(() => {
-        const storedUserId = localStorage.getItem("userId");
-        const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-        if (storedUserId === null || isLoggedIn === null) {
-            localStorage.clear();
-            navigate("/");
-        } else {
-            sortDeliveryData();
-            deliveryAlert();
-            checkIsLoggedIn()
-            document.title = "Simplex Tailor - Dashboard";
-        }
-    }, [navigate]);
-   */
-
   const checkIsLoggedIn = () => {
     axios.get("/userdata?id=" + userId)
       .then((response) => {
-        console.log(response.data.user.isLoggedIn);
         let isLoggedIn = response.data.user.isLoggedIn
         if (!isLoggedIn) {
           localStorage.clear()
@@ -155,7 +133,7 @@ export default function CustomerList() {
     <div>
       <Sidebar />
       <Topbar />
-      <div className='content-wrapper'>
+      <div className='content-wrapper' style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <section className="content-header">
           <div className="container-fluid">
             <div className="row mb-2">
@@ -243,7 +221,7 @@ export default function CustomerList() {
       {editModel && <EditWorker showEdit={showEdit} closeEdit={closeEdit} selectedId={selectedId} WorketEdit={false} />}
       {rateModel && <Rate rateModel={showRateModel} closeModel={closeRateModel} isCustomerRate={true} />}
 
-      {/* <Footer /> */}
+      <Footer />
     </div>
   )
 }

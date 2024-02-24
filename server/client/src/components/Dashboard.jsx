@@ -10,6 +10,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { userId } from './LocalItem';
 import { Navigate, useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 
 export default function Dashboard() {
 
@@ -106,7 +107,7 @@ export default function Dashboard() {
         <>
             <Sidebar />
             <Topbar />
-            <div className='content-wrapper'>
+            <div className='content-wrapper' style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
                 <section className="content-header">
                     <div className="container-fluid">
                         <div className="row mb-2">
@@ -349,7 +350,7 @@ export default function Dashboard() {
                     </Tabs>
                 </section>
             </div >
-            {/* <Footer /> */}
+            <Footer />
         </>
     )
 }

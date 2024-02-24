@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 export default function Topbar() {
   const navigate = useNavigate()
   const handleLogOut = () => {
-    localStorage.removeItem("token")
+    localStorage.clear()
     navigate('/')
   }
   return (

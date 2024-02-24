@@ -25,5 +25,4 @@ const errorPageStyles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    // height: '100vh',
 };

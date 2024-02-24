@@ -42,7 +42,7 @@ exports.login = async (req, res) => {
         }
         else {
             res.status(200).json({
-                status: "Wrong email! Please check Your Email Address.",
+                status: "Wrong user name! Please check Your User name.",
             })
         }
     } catch (error) {
@@ -57,11 +57,12 @@ exports.logOut = async (req, res) => {
     try {
         const user = await loginModel.findOne({ email: req.body.email });
         if (user) {
-            user.isLoggedIn = false;
+            user.isLoggedIn = req.body.isLoggedIn;
             await user.save();
 
             res.status(200).json({
-                status: "user logout succesfully",
+                status: "success",
+                user
             });
         } else {
             res.status(404).json({
@@ -94,3 +95,18 @@ exports.userData = async (req, res) => {
         });
     }
 };
+
+exports.AllUsers = async (req, res) => {
+    try {
+        const users = await loginModel.find({ role: "user" })
+        res.status(200).json({
+            status: "sucesfully find user",
+            users
+        });
+    } catch (error) {
+        res.status(404).json({
+            status: "Error",
+            message: "User not found",
+        });
+    }
+}

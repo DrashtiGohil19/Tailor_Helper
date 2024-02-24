@@ -116,7 +116,6 @@ export default function AllWorker() {
         }
       })
         .then(function (res) {
-          console.log(res.data);
           setview(res.data.data);
         })
     } else {
@@ -127,7 +126,7 @@ export default function AllWorker() {
     <div>
       <Sidebar />
       <Topbar />
-      <div className='content-wrapper'>
+      <div className='content-wrapper' style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <section className="content-header">
           <div className="container-fluid">
             <div className="row mb-2">

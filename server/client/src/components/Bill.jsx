@@ -1,16 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import axios from "axios";
 import { toast } from "react-toastify";
-import BillPage from "./BillPage";
-import ReactToPrint from "react-to-print";
 import { Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import Invoice from "./Invoice";
-import html2pdf from 'html2pdf.js';
 import { userId } from "./LocalItem";
-
+import Footer from "./Footer";
 
 function Bill() {
 
@@ -40,19 +36,25 @@ function Bill() {
   const getRate = () => {
     axios.get(`/customer/ratecustomer?userId=${userId}`)
       .then(function (response) {
-        setVal(response.data)
+        console.log(response.data);
+        setVal(response.data.result)
       })
       .catch(function (error) {
       })
   }
 
   const get_customerData = async () => {
-    await axios.get(`/bill/bill_data?mobilenu=${mobilenu}&userId=${userId}`, {
+    await axios.get(`/bill/bill_data`, {
+      params: {
+        mobilenu: mobilenu,
+        userId: userId
+      },
       headers: {
         "Authorization": token
       }
     })
       .then(function (response) {
+        console.log(response.data);
         if (response.data.data !== null) {
           setValue(response.data.data)
           setCustomer_id(response.data.data._id)
@@ -161,9 +163,10 @@ function Bill() {
         })
     }
   }
-
   useEffect(() => {
     getRate()
+  }, [])
+  useEffect(() => {
     get_customerData()
     document.title = "Simplex Tailor - Bill Page"
   }, [mobilenu, customer_id])
@@ -185,7 +188,7 @@ function Bill() {
     <div>
       <Sidebar />
       <Topbar />
-      <div className='content-wrapper'>
+      <div className='content-wrapper' style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <section className="content-header">
           <div className="container-fluid">
             <div className="row mb-2">
@@ -280,7 +283,7 @@ function Bill() {
                               <input type="text" className="w-50 form-control form-control-sm text-center" name="shirt_qty" value={value.shirt_qty} onChange={handleChange} />
                             </div>
                           </td>
-                          <td>{val.shirt_rate}</td>
+                          <td>{val?.shirt_rate}</td>
                           <td>{shirtAmount || 0}</td>
                         </tr>
                         <tr>
@@ -291,7 +294,7 @@ function Bill() {
                               <input type="text" className="form-control w-50 form-control-sm text-center" name="pent_qty" value={value.pent_qty} onChange={handleChange} />
                             </div>
                           </td>
-                          <td>{val.pent_rate}</td>
+                          <td>{val?.pent_rate}</td>
                           <td>{pentAmount || 0}</td>
                         </tr>
                         <tr>
@@ -302,15 +305,9 @@ function Bill() {
                               <input type="text" className="w-50 form-control form-control-sm text-center" name="kurta_qty" value={value.kurta_qty} onChange={handleChange} />
                             </div>
                           </td>
-                          <td>{val.kurta_rate}</td>
+                          <td>{val?.kurta_rate}</td>
                           <td>{kurtaAmount || 0}</td>
                         </tr>
-                        {/* <tr>
-                            <th colSpan={4}>Total Amount</th>
-                            <td>
-                              {totalAmount || 0}
-                            </td>
-                          </tr> */}
                       </tbody>
                     </table>
                   </div>
@@ -352,7 +349,8 @@ function Bill() {
       <div className="d-none">
         <Invoice customer_id={responseID} print={print} />
       </div>
-    </div >
+      <Footer />
+    </div>
   )
 }
 

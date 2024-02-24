@@ -31,7 +31,6 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
         })
             .then(function (res) {
                 setVal(res.data)
-                console.log(res.data);
                 closeModel()
                 toast.success("Rate Saved Succesfully !", {
                     autoClose: 4000,
@@ -55,7 +54,6 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
     useEffect(() => {
         axios.get(apiEndpoint + "?userId=" + userId)
             .then(function (res) {
-                console.log(res.data);
                 if (res.data.result !== null) {
                     setVal(res.data.result);
                 }
@@ -76,7 +74,7 @@ export default function Rate({ rateModel, closeModel, isCustomerRate }) {
                             <Col lg={3}><Form.Label>Shirt Rate :</Form.Label></Col>
                             <Col>
                                 <Form.Control
-                                    type="text"
+                                    type="number"
                                     name="shirt_rate"
                                     value={val.shirt_rate}
                                     onChange={handleChange}
