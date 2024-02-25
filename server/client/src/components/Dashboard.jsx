@@ -49,7 +49,8 @@ export default function Dashboard() {
                 let isLoggedIn = response.data.user.isLoggedIn
                 if (!isLoggedIn) {
                     localStorage.clear()
-                    navigate("/")
+                    navigate("../", { replace: true });
+                    navigate(0)
                 }
             })
     }
@@ -60,7 +61,8 @@ export default function Dashboard() {
 
         if (storedUserId === null || isLoggedIn === null) {
             localStorage.clear();
-            navigate("/");
+            navigate("../", { replace: true });
+            navigate(0)
         } else {
             sortDeliveryData();
             deliveryAlert();

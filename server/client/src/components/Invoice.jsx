@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "../App.css"
 import axios from 'axios'
 import html2pdf from 'html2pdf.js';
+import { Col } from 'react-bootstrap';
 
 function Invoice(props) {
     const [billData, setBillData] = useState([])
@@ -70,7 +71,7 @@ function Invoice(props) {
                     <p className='fw-3'>Shop No. 4, First Floor, Mira Complex Near Virat Nagar, Kapodra, Surat</p>
                 </div>
                 <div className="row mb-2">
-                    <div className="col-2">
+                    <div className="col-4">
                         <label className='mr-2'>Name :</label>
                         {customerData.customername}
                     </div>
@@ -86,7 +87,7 @@ function Invoice(props) {
                     </div>
                 </div>
                 <div className="table-responsive-sm">
-                    <table className="table table-striped border">
+                    <table className="table table-striped border text-center">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -114,13 +115,13 @@ function Invoice(props) {
                     </table>
                 </div>
                 <div className="row">
-                    <div className="col-lg-6 col-sm-6">
+                    <Col lg={6} sm={6} xs={7}>
                         <label>Note :</label>
                         <p className="mb-1">1. કપડાં લેવા આવો ત્યારે બિલ અવશ્ય લાવવું.</p>
                         <p className="mb-1">2. સંજોગો વસાત કપડા ની ડિલિવરી માં ફેરફાર થઈ શકે છે.</p>
                         <p className="mb-1">3. કાપડ માં કોઈ નુકસાની હશે તો તેના માટે અમે જવાબદાર રહેશુ નહીં.</p>
-                    </div>
-                    <div className="col-lg-4 col-sm-5 ml-auto">
+                    </Col>
+                    <Col lg={6} sm={6} xs={5}>
                         <table className="table table-clear">
                             <tbody>
 
@@ -129,22 +130,22 @@ function Invoice(props) {
                                         return (
                                             <>
                                                 <tr>
-                                                    <td className="left">
+                                                    <td>
                                                         <strong>Subtotal</strong>
                                                     </td>
-                                                    <td className="right">{item.total_amt}</td>
+                                                    <td>{item.total_amt}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="left">
+                                                    <td>
                                                         <strong>Paid Amount</strong>
                                                     </td>
-                                                    <td className="right">{item.paid_amt}</td>
+                                                    <td>{item.paid_amt}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="left">
+                                                    <td>
                                                         <strong>Total Amount</strong>
                                                     </td>
-                                                    <td className="right">
+                                                    <td>
                                                         <strong>{item.final_amt}</strong>
                                                     </td>
                                                 </tr>
@@ -155,7 +156,7 @@ function Invoice(props) {
 
                             </tbody>
                         </table>
-                    </div>
+                    </Col>
                 </div>
             </div>
         </div>

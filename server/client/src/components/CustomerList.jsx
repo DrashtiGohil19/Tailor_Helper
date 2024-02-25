@@ -10,7 +10,7 @@ import DeleteData from "./DeleteData";
 import EditWorker from "./EditWorker";
 import AddPerson from "./AddPerson";
 import Rate from "./Rate";
-import { Col, Placeholder } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { userId } from "./LocalItem";
@@ -77,6 +77,7 @@ export default function CustomerList() {
     if (storedUserId === null || isLoggedIn === null) {
       localStorage.clear();
       navigate("../", { replace: true });
+      navigate(0)
     } else {
       if (searchQuery === "") {
         viewdata();
@@ -93,6 +94,7 @@ export default function CustomerList() {
         if (!isLoggedIn) {
           localStorage.clear()
           navigate("../", { replace: true })
+          navigate(0)
         }
       })
   }

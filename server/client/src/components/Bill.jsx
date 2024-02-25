@@ -278,7 +278,7 @@ function Bill() {
                           <td>Shirt</td>
                           <td>
                             <div className="d-flex justify-content-center">
-                              <input type="text" className="w-50 form-control form-control-sm text-center" name="shirt_qty" value={value.shirt_qty} onChange={handleChange} />
+                              <input type="numbet" className="w-50 form-control form-control-sm text-center" name="shirt_qty" value={value.shirt_qty} onChange={handleChange} />
                             </div>
                           </td>
                           <td>{val?.shirt_rate}</td>
@@ -289,7 +289,7 @@ function Bill() {
                           <td>Pent</td>
                           <td>
                             <div className="d-flex justify-content-center">
-                              <input type="text" className="form-control w-50 form-control-sm text-center" name="pent_qty" value={value.pent_qty} onChange={handleChange} />
+                              <input type="number" className="form-control w-50 form-control-sm text-center" name="pent_qty" value={value.pent_qty} onChange={handleChange} />
                             </div>
                           </td>
                           <td>{val?.pent_rate}</td>
@@ -300,7 +300,7 @@ function Bill() {
                           <td>Kurta</td>
                           <td>
                             <div className="d-flex justify-content-center">
-                              <input type="text" className="w-50 form-control form-control-sm text-center" name="kurta_qty" value={value.kurta_qty} onChange={handleChange} />
+                              <input type="number" className="w-50 form-control form-control-sm text-center" name="kurta_qty" value={value.kurta_qty} onChange={handleChange} />
                             </div>
                           </td>
                           <td>{val?.kurta_rate}</td>
@@ -319,7 +319,7 @@ function Bill() {
                   <Col sm={4} xs={4} md={2}>
                     <div className="form-group">
                       <label>Total Amount</label>
-                      <input type="text" className="form-control" value={totalAmount === 0 ? 0 : totalAmount} />
+                      <input type="number" className="form-control" value={totalAmount === 0 ? 0 : totalAmount} />
                     </div>
                   </Col>
                   <Col sm={4} xs={4} md={2}>
@@ -331,7 +331,7 @@ function Bill() {
                   <Col sm={4} xs={4} md={2}>
                     <div className="form-group">
                       <label>Final Amount</label>
-                      <input type="text" className="form-control" value={finalAmount || 0} />
+                      <input type="number" className="form-control" value={finalAmount || 0} />
                     </div>
                   </Col>
                 </div>
