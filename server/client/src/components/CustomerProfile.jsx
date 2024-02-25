@@ -15,7 +15,6 @@ function CustomerProfile() {
             }
         })
             .then(function (res) {
-                console.log(res.data.customerData);
                 setVal(res.data.customerData)
                 setName(res.data.data.customername)
             })

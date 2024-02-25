@@ -36,7 +36,6 @@ function Bill() {
   const getRate = () => {
     axios.get(`/customer/ratecustomer?userId=${userId}`)
       .then(function (response) {
-        console.log(response.data);
         setVal(response.data.result)
       })
       .catch(function (error) {
@@ -54,7 +53,6 @@ function Bill() {
       }
     })
       .then(function (response) {
-        console.log(response.data);
         if (response.data.data !== null) {
           setValue(response.data.data)
           setCustomer_id(response.data.data._id)

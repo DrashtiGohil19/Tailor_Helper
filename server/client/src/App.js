@@ -4,7 +4,7 @@ import Loader from './components/Loader';
 import 'react-toastify/dist/ReactToastify.css';
 import React, { Suspense } from 'react';
 import './App.css';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Invoice from './components/Invoice';
 const AdminDashboard = React.lazy(() => import("./components/AdminDashboard"))
 const AllWorker = React.lazy(() => import("./components/AllWorker"))
@@ -25,7 +25,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={!isAuthenticated && <Login />}
+            element={!isAuthenticated ? <Login /> : <Navigate to={"/dashboard"} replace />}
           />
           <Route path="/admin/dashboard" element={<PrivateRoute> <AdminDashboard /> </PrivateRoute>} />
           <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />

@@ -4,7 +4,7 @@ import Topbar from "./Topbar";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
-import ReactToPrint from "react-to-print";
+// import ReactToPrint from "react-to-print";
 import Print_measurement from "./Print_measurement";
 import { Col } from "react-bootstrap";
 import { token } from "./LocalItem";
@@ -52,6 +52,7 @@ export default function Measurement() {
     const params = useParams()
     const [dataExists, setDataExists] = useState(false);
     const ref = useRef(null)
+    const [printPDF, setPrintPDF] = useState(false)
 
     const handleChange = (e) => {
         const { value, checked, type } = e.target;
@@ -423,10 +424,6 @@ export default function Measurement() {
                                                 <input type="checkbox" className="m-1" name="extra_p" value="ડબલ પોકેટ" checked={isExtraSelected("ડબલ પોકેટ")} onChange={handleChange} />
                                                 <label>ડબલ પોકેટ</label>
                                             </Col>
-                                            <Col md={3} xs={6} sm={3} lg={3} xl={2}>
-                                                <input type="checkbox" className="m-1" name="extra_p" value="નો પોકેટ" checked={isExtraSelected("નો પોકેટ")} onChange={handleChange} />
-                                                <label>નો પોકેટ</label>
-                                            </Col>
                                         </div>
 
                                         {/* =================================================================== */}
@@ -584,19 +581,20 @@ export default function Measurement() {
                         <div className="row">
                             <div className="col-sm-6">
                                 <button type="submit" className="btn btn-primary mr-3" onClick={handleClick}>Save</button>
-                                <ReactToPrint
+                                <button className="btn btn-primary" onClick={() => setPrintPDF(true)}>Get Print</button>
+                                {/* <ReactToPrint
                                     trigger={() => <button className="btn btn-primary" >Get Print</button>}
                                     content={() => ref.current}
-                                />
+                                /> */}
                             </div>
                         </div>
                     </div>
                 </section>
             </div >
-            <div style={{ display: 'none' }}>
-                <div ref={ref}>
-                    <Print_measurement shirtMeasurement={shirtData} pentMeasurement={pentData} customerData={customerData} />
-                </div>
+            <div className="d-none">
+                {/* <div ref={ref}> */}
+                <Print_measurement shirtMeasurement={shirtData} pentMeasurement={pentData} customerData={customerData} printPDF={printPDF} />
+                {/* </div> */}
             </div>
         </div >
     )

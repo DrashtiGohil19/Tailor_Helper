@@ -43,7 +43,7 @@ function AdminDashboard() {
 
     const handleLogOut = () => {
         localStorage.clear()
-        navigate("/")
+        navigate("../", { replace: true })
     }
     return (
         <div>

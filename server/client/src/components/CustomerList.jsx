@@ -76,7 +76,7 @@ export default function CustomerList() {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     if (storedUserId === null || isLoggedIn === null) {
       localStorage.clear();
-      navigate("/");
+      navigate("../", { replace: true });
     } else {
       if (searchQuery === "") {
         viewdata();
@@ -92,7 +92,7 @@ export default function CustomerList() {
         let isLoggedIn = response.data.user.isLoggedIn
         if (!isLoggedIn) {
           localStorage.clear()
-          navigate("/")
+          navigate("../", { replace: true })
         }
       })
   }
@@ -133,7 +133,7 @@ export default function CustomerList() {
     <div>
       <Sidebar />
       <Topbar />
-      <div className='content-wrapper' style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div className='content-wrapper' style={{ minHeight: '100vh' }}>
         <section className="content-header">
           <div className="container-fluid">
             <div className="row mb-2">

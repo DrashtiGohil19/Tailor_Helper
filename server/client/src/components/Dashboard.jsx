@@ -107,7 +107,7 @@ export default function Dashboard() {
         <>
             <Sidebar />
             <Topbar />
-            <div className='content-wrapper' style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <div className='content-wrapper' style={{ minHeight: '100vh' }}>
                 <section className="content-header">
                     <div className="container-fluid">
                         <div className="row mb-2">

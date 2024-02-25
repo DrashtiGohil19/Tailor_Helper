@@ -4,7 +4,8 @@ export default function Topbar() {
   const navigate = useNavigate()
   const handleLogOut = () => {
     localStorage.clear()
-    navigate('/')
+    navigate('../', { replace: true })
+    navigate(0)
   }
   return (
     <nav className="main-header navbar navbar-expand navbar-white navbar-light">
