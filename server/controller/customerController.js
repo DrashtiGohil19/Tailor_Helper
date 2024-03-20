@@ -19,7 +19,8 @@ exports.addCustomer = async (req, res) => {
             customername: req.body.name,
             mobilenu: req.body.mobilenu,
             bill_nu: newBillNumber,
-            userId: req.body.userId
+            userId: req.body.userId,
+            register_nu: req.body.register_nu
         };
         var data = await customerModel.create(newCustomer);
         res.status(200).json({

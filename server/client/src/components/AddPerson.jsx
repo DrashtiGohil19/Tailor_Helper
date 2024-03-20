@@ -11,6 +11,7 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
     let [val, setval] = useState({
         name: "",
         mobilenu: "",
+        register_nu: ""
     })
     const [validationErrors, setValidationErrors] = useState({
         name: '',
@@ -52,7 +53,7 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
 
             const dataPayload = isAddingWorker
                 ? { workername: val.name, mobilenu: val.mobilenu, userId: userId }
-                : { name: val.name, mobilenu: val.mobilenu, userId: userId }
+                : { name: val.name, mobilenu: val.mobilenu, userId: userId, register_nu: val.register_nu }
 
             axios.post(apiEndpoint, dataPayload, {
                 headers: {
@@ -117,7 +118,7 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
                                 )}
                             </Col>
                         </Row>
-                        <Row>
+                        <Row className='mb-3'>
                             <Col lg={2}><Form.Label>Mobile :</Form.Label></Col>
                             <Col>
                                 <Form.Control
@@ -133,6 +134,17 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
                                 )}
                             </Col>
                         </Row>
+                        {
+                            !isAddingWorker &&
+                            <Row>
+                                <Col lg={2}>
+                                    <Form.Label>Book Nu.</Form.Label>
+                                </Col>
+                                <Col>
+                                    <Form.Control type="number" placeholder='Enter book Nu.' className="form-control" name="register_nu" value={val.register_nu} onChange={handlevalue} />
+                                </Col>
+                            </Row>
+                        }
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -144,6 +156,6 @@ export default function AddPerson({ showModel, closeModal, isAddingWorker }) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </div >
     )
 }

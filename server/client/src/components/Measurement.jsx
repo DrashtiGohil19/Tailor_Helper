@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
-// import ReactToPrint from "react-to-print";
 import Print_measurement from "./Print_measurement";
 import { Col } from "react-bootstrap";
 import { token } from "./LocalItem";
@@ -51,7 +50,6 @@ export default function Measurement() {
     })
     const params = useParams()
     const [dataExists, setDataExists] = useState(false);
-    const ref = useRef(null)
     const [printPDF, setPrintPDF] = useState(false)
 
     const handleChange = (e) => {

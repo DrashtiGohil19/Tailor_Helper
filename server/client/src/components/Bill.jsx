@@ -278,7 +278,7 @@ function Bill() {
                           <td>Shirt</td>
                           <td>
                             <div className="d-flex justify-content-center">
-                              <input type="numbet" className="w-50 form-control form-control-sm text-center" name="shirt_qty" value={value.shirt_qty} onChange={handleChange} />
+                              <input type="number" className="w-50 form-control form-control-sm text-center" name="shirt_qty" value={value.shirt_qty} onChange={handleChange} />
                             </div>
                           </td>
                           <td>{val?.shirt_rate}</td>
